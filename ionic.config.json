@@ -1,5 +1,8 @@
 {
   "name": "Taxi",
-  "app_id": "",
-  "type": "ionic-angular"
+  "app_id": "10e4ffc1",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
 }
