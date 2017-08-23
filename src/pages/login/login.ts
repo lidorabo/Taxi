@@ -1,38 +1,35 @@
 import { NavController, LoadingController, Loading, AlertController, Platform } from 'ionic-angular';
-import { Component } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { Facebook } from '@ionic-native/facebook';
 import { GooglePlus } from '@ionic-native/google-plus';
 import firebase from 'firebase';
 import { HomePage } from "../home/home";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
-import { EmailValidator } from '../../validators/email';
 import { ResetpasswordPage } from "../resetpassword/resetpassword";
 import { SignupPage } from "../signup/signup";
+@Injectable()
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
 })
 export class LoginPage {
-  private mailf:string='email';
-  public loginForm:FormGroup;
+  public  loginForm:FormGroup;
   private loading:Loading;
   private userInfo:any =null;
   private cordovaplat:string='cordova';
-  private googlewebprovider:any=new firebase.auth.GoogleAuthProvider();
-  private facebookwebprovider:any=new firebase.auth.FacebookAuthProvider();
   constructor(public navCtrl: NavController, private facebook: Facebook, private googlePlus: GooglePlus,
   private authData: AuthProvider, private formBuilder: FormBuilder, private alertCtrl: AlertController,
   private loadingCtrl: LoadingController, private platform:Platform) {
     this.loginForm = formBuilder.group({
     email: ['', Validators.compose([Validators.required, 
-    EmailValidator.isValid])],
+    Validators.email])],
     password: ['', Validators.compose([Validators.minLength(6), 
     Validators.required])]
 });
   }
 
-  loginUser(){
+  loginUser():void{
   if (!this.loginForm.valid){
     console.log(this.loginForm.value);
   } else {
@@ -61,74 +58,66 @@ export class LoginPage {
   }
 }
 
-  goToResetPassword(){
+  goToResetPassword():void{
     this.navCtrl.push(ResetpasswordPage);
   }
 
-  createAccount(){  
+  createAccount():void{  
     this.navCtrl.push(SignupPage);
   }
 
 
 
 
-  facebookLogin(){
-    if(this.platform.is('cordova'))
+  facebookLogin():void{
+    if(this.platform.is(this.cordovaplat))
     {
       this.facebook.login(["email", "public_profile"]).then((loginResponse)=>{
         let credential = firebase.auth.FacebookAuthProvider.credential(loginResponse.authResponse.accessToken);
-        this.facebook.api('me?fields=id,name,email,first_name,last_name',[]).then(profile =>{
-          this.userInfo={email: profile['email'], first_name: profile['first_name'], last_name: profile['last_name'], driver: false, phone: -1}
-        });
         firebase.auth().signInWithCredential(credential).then((info)=>{
-          firebase.database().ref('users/' + firebase.auth().currentUser.uid).set({
-          email: this.userInfo.email,
-          first_name: this.userInfo.first_name,
-          last_name : this.userInfo.last_name,
-          phone: this.userInfo.phone,
-          driver: this.userInfo.driver
-        });
-          this.navCtrl.setRoot(HomePage);
+        //  if(this.authData.getValueFromDatabase(firebase.auth().currentUser.uid)==null)
+            //this.authData.AddUserToFireBaseDatabse(info.providerData[0].email,info.displayName.split(' ')[0],info.displayName.split(' ')[1],'-1',false);
         })
       }) 
     }
     else{
-      firebase.auth().signInWithPopup(this.facebookwebprovider).then((result) =>{
-         this.navCtrl.setRoot(HomePage);
+      firebase.auth().signInWithPopup(this.authData.facebookwebprovider).then((user) =>{
+        //if(this.authData.getValueFromDatabase(firebase.auth().currentUser.uid)==null)
+           // this.authData.AddUserToFireBaseDatabse(user.additionalUserInfo.profile.email,user.additionalUserInfo.profile.first_name,user.additionalUserInfo.profile.last_name,'-1',false);
       }).catch(function(error) {
-        // Handle Errors here.
-        // ...
       });
     }
     
   }  
 
-  loginGoogle(){
+  loginGoogle():void{
     if(this.platform.is(this.cordovaplat))
     {
       this.googlePlus.login({
-        'webClientId': '136238361915-pacoe7gvtqbsd6bvfpu7958nlckncjl7.apps.googleusercontent.com',
+        'webClientId':this.authData.clientidgoogle,
         'offline': true
       }).then( res => {
         firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
-          .then( success => {
-              alert("Firebase success: " + JSON.stringify(success));
+          .then(user => {
+
+            this.authData.AddUserToFireBaseDatabse(user.providerData[0].email,user.displayName.split(' ')[0],user.displayName.split(' ')[1],this.authData.emptyphone,false);
+            this.navCtrl.setRoot(HomePage);
           })
           .catch( error => alert("Firebase failure: " + JSON.stringify(error)));
         }).catch(err => alert(err));
       }
       else{
-        this.googlewebprovider.addScope(this.mailf);
-        firebase.auth().signInWithPopup(this.googlewebprovider).then((result)=> {
+        this.authData.googlewebprovider.addScope(this.authData.emailprop);
+        firebase.auth().signInWithPopup(this.authData.googlewebprovider).then((result)=> {
+          this.authData.AddUserToFireBaseDatabse(result.additionalUserInfo.profile.email,result.additionalUserInfo.profile.given_name,result.additionalUserInfo.profile.family_name,this.authData.emptyphone,false);
           this.navCtrl.setRoot(HomePage)
         }).catch(function(error) {
-          // Handle Errors here.
-          // ...
-        });
-      }
+
+      });
     }
     
   
+}
 }
 
 

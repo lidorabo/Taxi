@@ -1,7 +1,9 @@
+import { PhonenumberPage } from './../phonenumber/phonenumber';
+import { AuthProvider } from './../../providers/auth/auth';
+import { LoginPage } from './../login/login';
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
-import { LoginPage } from "../login/login";
 import { HomePage } from "../home/home";
 import firebase from 'firebase';
 @Component({
@@ -11,7 +13,9 @@ import firebase from 'firebase';
 //Class of loading screen.
 export class PrepagePage {
   ms: number = 5000;
-  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController) {
+  num:string=null;
+  phonefirebase:string='phone';
+  constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public authdata: AuthProvider) {
     this.redirectLoginPage();
   }
   //This function waiting according to milliseconds.
@@ -25,14 +29,17 @@ export class PrepagePage {
 
   }
   RedirectUser() {
-    var user = firebase.auth().currentUser;
-    //If user logged in.
-    if (user) {
-      this.navCtrl.setRoot(HomePage);
-    }
-    //If user logged out.
-    else {
-      this.navCtrl.setRoot(LoginPage);
-    }
+
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user == null) {
+        this.navCtrl.setRoot(LoginPage);
+      }
+      else {
+          var uid= firebase.auth().currentUser.uid;
+          var query=firebase.database().ref('/'+this.authdata.userstable+ '/' +uid);
+          this.navCtrl.setRoot(HomePage);
+        
+      }
+    })
   }
 }

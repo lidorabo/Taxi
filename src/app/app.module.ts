@@ -1,3 +1,4 @@
+import { PhonenumberPage } from './../pages/phonenumber/phonenumber';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -16,7 +17,6 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { SignupPage } from "../pages/signup/signup";
 import { ResetpasswordPage } from "../pages/resetpassword/resetpassword";
 import firebase from 'firebase';
-
 // Initialize Firebase
   export const config = {
     apiKey: "AIzaSyCtY_BAKROjnZykQhdiUXb6q4uJnrxCrS8",
@@ -28,6 +28,7 @@ import firebase from 'firebase';
   };
   firebase.initializeApp(config);
 
+
 @NgModule({
   declarations: [
     MyApp,
@@ -36,6 +37,7 @@ import firebase from 'firebase';
     SignupPage,
     ResetpasswordPage,
     HomePage,
+    PhonenumberPage
   ],
   imports: [
     BrowserModule,
@@ -50,7 +52,8 @@ import firebase from 'firebase';
     LoginPage,
     SignupPage,
     ResetpasswordPage,
-    HomePage
+    HomePage,
+    PhonenumberPage
   ],
   providers: [
     StatusBar,

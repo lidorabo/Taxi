@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import {  NavController, AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
-import { EmailValidator } from '../../validators/email';
-
 @Component({
   selector: 'page-resetpassword',
   templateUrl: 'resetpassword.html',
@@ -13,7 +11,7 @@ export class ResetpasswordPage {
   constructor(public authData: AuthProvider, public formBuilder: FormBuilder,
     public nav: NavController, public alertCtrl: AlertController) {
       this.resetPasswordForm = formBuilder.group({
-      email: ['', Validators.compose([Validators.required, EmailValidator.isValid])],
+      email: ['', Validators.compose([Validators.required, Validators.email])],
     })
   }
 

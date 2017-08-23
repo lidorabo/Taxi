@@ -8,6 +8,7 @@ import { LoginPage } from "../login/login";
 })
 export class HomePage {
   authData:AuthProvider;
+  confirmm:string= 'Do you want to logout?';
   constructor(public navCtrl: NavController, authdata:AuthProvider,
   platform: Platform,public alertCtrl: AlertController,) {
     this.authData = authdata;
@@ -16,9 +17,9 @@ export class HomePage {
   exit(){
       let alert = this.alertCtrl.create({
         title: 'Confirm',
-        message: 'Do you want to logout?',
+        message:this.confirmm,
         buttons: [{
-          text: "Agree?",
+          text: "Agree",
           handler: () => {this.logout();}
         }, {
           text: "Disagree",
