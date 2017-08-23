@@ -50,9 +50,14 @@ export class AuthProvider {
       email: email,
       first_name: firstname,
       last_name: lastname,
-      phone: phone,
       driver: driver
     });
+    
+  }
+  public updatePhoneNumber(phonen:string):void{
+    firebase.database().ref(this.userstable + '/' + firebase.auth().currentUser.uid).update({
+      phone:phonen
+    })
   }
   public getValueFromDatabase(path:string):any{
     var field:string;

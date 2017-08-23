@@ -75,15 +75,13 @@ export class LoginPage {
       this.facebook.login(["email", "public_profile"]).then((loginResponse)=>{
         let credential = firebase.auth.FacebookAuthProvider.credential(loginResponse.authResponse.accessToken);
         firebase.auth().signInWithCredential(credential).then((info)=>{
-        //  if(this.authData.getValueFromDatabase(firebase.auth().currentUser.uid)==null)
-            //this.authData.AddUserToFireBaseDatabse(info.providerData[0].email,info.displayName.split(' ')[0],info.displayName.split(' ')[1],'-1',false);
+        this.authData.AddUserToFireBaseDatabse(info.providerData[0].email,info.displayName.split(' ')[0],info.displayName.split(' ')[1],'-1',false);
         })
       }) 
     }
     else{
       firebase.auth().signInWithPopup(this.authData.facebookwebprovider).then((user) =>{
-        //if(this.authData.getValueFromDatabase(firebase.auth().currentUser.uid)==null)
-           // this.authData.AddUserToFireBaseDatabse(user.additionalUserInfo.profile.email,user.additionalUserInfo.profile.first_name,user.additionalUserInfo.profile.last_name,'-1',false);
+      this.authData.AddUserToFireBaseDatabse(user.additionalUserInfo.profile.email,user.additionalUserInfo.profile.first_name,user.additionalUserInfo.profile.last_name,'-1',false);
       }).catch(function(error) {
       });
     }

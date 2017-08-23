@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AuthProvider } from '../../providers/auth/auth';
+import { HomePage } from "../home/home";
 
 /**
  * Generated class for the PhonenumberPage page.
@@ -15,11 +17,12 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class PhonenumberPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private authData: AuthProvider) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad PhonenumberPage');
+  openFilters() {
+    this.authData.updatePhoneNumber('0545719050');
+    
   }
 
 }

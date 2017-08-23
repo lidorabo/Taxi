@@ -13,8 +13,8 @@ import firebase from 'firebase';
 //Class of loading screen.
 export class PrepagePage {
   ms: number = 5000;
-  num:string=null;
-  phonefirebase:string='phone';
+  num: string = null;
+  phonefirebase: string = 'phone';
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public authdata: AuthProvider) {
     this.redirectLoginPage();
   }
@@ -35,10 +35,17 @@ export class PrepagePage {
         this.navCtrl.setRoot(LoginPage);
       }
       else {
-          var uid= firebase.auth().currentUser.uid;
-          var query=firebase.database().ref('/'+this.authdata.userstable+ '/' +uid);
-          this.navCtrl.setRoot(HomePage);
-        
+        var uid = firebase.auth().currentUser.uid;
+        var database = firebase.database().ref();
+        database.child(this.authdata.userstable).child(uid).on("value", data => {
+          if (data.hasChild('phone')) {
+            this.navCtrl.setRoot(HomePage)
+          }
+          else {
+            this.navCtrl.setRoot(PhonenumberPage);
+          }
+
+        });
       }
     })
   }
