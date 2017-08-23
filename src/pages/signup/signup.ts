@@ -32,7 +32,8 @@ export class SignupPage {
       this.authData.signupUser(this.signupForm.value.email, this.signupForm.value.password)
       .then(() => {
         this.authData.afAuth.auth.signOut();
-        this.authData.AddUserToFireBaseDatabse(this.userInfo.email,this.userInfo.first_name,this.userInfo.last_name,this.userInfo.phone,this.userInfo.driver);
+        this.authData.AddUserToFireBaseDatabse(this.userInfo.email,this.userInfo.first_name,this.userInfo.last_name,this.userInfo.driver);
+        this.authData.updatePhoneNumber(this.userInfo.phone);
       }, (error) => {
         this.loading.dismiss().then( () => {
           var errorMessage: string = error.message;

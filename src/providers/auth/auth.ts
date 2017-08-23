@@ -8,7 +8,6 @@ import * as admin from 'firebase-admin';
 export class AuthProvider {
   public readonly webclientidprop: string = 'webClientId';
   public readonly clientidgoogle: string = '136238361915-pacoe7gvtqbsd6bvfpu7958nlckncjl7.apps.googleusercontent.com';
-  public readonly emptyphone = '-1';
   public googlewebprovider: any = new firebase.auth.GoogleAuthProvider();
   public facebookwebprovider: any = new firebase.auth.FacebookAuthProvider();
   public status: string = 'offline';
@@ -44,7 +43,7 @@ export class AuthProvider {
       }
     }
   }
-  AddUserToFireBaseDatabse(email: string, firstname: string, lastname: string, phone: string, driver: boolean): void {
+  AddUserToFireBaseDatabse(email: string, firstname: string, lastname: string, driver: boolean): void {
 
     firebase.database().ref(this.userstable + '/' + firebase.auth().currentUser.uid).set({
       email: email,

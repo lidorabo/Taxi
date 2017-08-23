@@ -75,13 +75,13 @@ export class LoginPage {
       this.facebook.login(["email", "public_profile"]).then((loginResponse)=>{
         let credential = firebase.auth.FacebookAuthProvider.credential(loginResponse.authResponse.accessToken);
         firebase.auth().signInWithCredential(credential).then((info)=>{
-        this.authData.AddUserToFireBaseDatabse(info.providerData[0].email,info.displayName.split(' ')[0],info.displayName.split(' ')[1],'-1',false);
+        this.authData.AddUserToFireBaseDatabse(info.providerData[0].email,info.displayName.split(' ')[0],info.displayName.split(' ')[1],false);
         })
       }) 
     }
     else{
       firebase.auth().signInWithPopup(this.authData.facebookwebprovider).then((user) =>{
-      this.authData.AddUserToFireBaseDatabse(user.additionalUserInfo.profile.email,user.additionalUserInfo.profile.first_name,user.additionalUserInfo.profile.last_name,'-1',false);
+      this.authData.AddUserToFireBaseDatabse(user.additionalUserInfo.profile.email,user.additionalUserInfo.profile.first_name,user.additionalUserInfo.profile.last_name,false);
       }).catch(function(error) {
       });
     }
@@ -98,7 +98,7 @@ export class LoginPage {
         firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
           .then(user => {
 
-            this.authData.AddUserToFireBaseDatabse(user.providerData[0].email,user.displayName.split(' ')[0],user.displayName.split(' ')[1],this.authData.emptyphone,false);
+            this.authData.AddUserToFireBaseDatabse(user.providerData[0].email,user.displayName.split(' ')[0],user.displayName.split(' ')[1],false);
             this.navCtrl.setRoot(HomePage);
           })
           .catch( error => alert("Firebase failure: " + JSON.stringify(error)));
@@ -107,7 +107,7 @@ export class LoginPage {
       else{
         this.authData.googlewebprovider.addScope(this.authData.emailprop);
         firebase.auth().signInWithPopup(this.authData.googlewebprovider).then((result)=> {
-          this.authData.AddUserToFireBaseDatabse(result.additionalUserInfo.profile.email,result.additionalUserInfo.profile.given_name,result.additionalUserInfo.profile.family_name,this.authData.emptyphone,false);
+          this.authData.AddUserToFireBaseDatabse(result.additionalUserInfo.profile.email,result.additionalUserInfo.profile.given_name,result.additionalUserInfo.profile.family_name,false);
           this.navCtrl.setRoot(HomePage)
         }).catch(function(error) {
 
