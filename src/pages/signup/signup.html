@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>signup</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <ion-list>
+    <form [formGroup]="signupForm" (ngSubmit)="signupUser()">
+      <ion-item>
+        <ion-label floating primary>Email</ion-label>
+        <ion-input [(ngModel)]="userInfo.email" formControlName="email" type="email" id="email"> </ion-input>
+      </ion-item>
+      <p *ngIf="!signupForm.controls.email.valid && signupForm.controls.email.dirty" danger padding-left>Invalid Email</p>
+      <ion-item>
+        <ion-label floating primary>First Name</ion-label>
+        <ion-input [(ngModel)]="userInfo.first_name" formControlName="first_name" type="text" id="first_name" spellcheck="false"
+          autocapitalize="on">
+        </ion-input>
+      </ion-item>
+      <p *ngIf="!signupForm.controls.first_name.valid && signupForm.controls.first_name.dirty" danger padding-left>Just letters, minimun size:2.</p>
+      <ion-item>
+        <ion-label floating primary>Last Name</ion-label>
+        <ion-input [(ngModel)]="userInfo.last_name" formControlName="last_name" type="text" id="last_name" spellcheck="false" autocapitalize="on">
+        </ion-input>
+      </ion-item>
+      <p *ngIf="!signupForm.controls.last_name.valid && signupForm.controls.last_name.dirty" danger padding-left>Just letters, minimun size:2.</p>
+
+      <ion-item>
+        <ion-label floating primary>Phone</ion-label>
+        <ion-input [(ngModel)]="userInfo.phone" formControlName="phone" type="text" id="phone">
+        </ion-input>
+      </ion-item>
+      <p *ngIf="!signupForm.controls.phone.valid && signupForm.controls.phone.dirty" danger padding-left>Invalid Phone</p>
+      <ion-item>
+        <ion-label stacked>Password</ion-label>
+        <ion-input [(ngModel)]="userInfo.pass" formControlName="password" type="password" placeholder="Your password"></ion-input>
+      </ion-item>
+      <ion-item class="error-message" *ngIf="!signupForm.controls.password.valid  && signupForm.controls.password.dirty">
+        <p>Your password needs more than 6 characters.</p>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Confirm Password</ion-label>
+        <ion-input formControlName="confirmPassword" type="password" placeholder="Your password"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="signupForm.hasError('notEquivalent') && signupForm.controls.password.valid" class="help-block text-danger">
+        <p>The two passwords aren't the same.</p>
+      </ion-item>
+      <button type="submit" round primary [disabled]="!signupForm.valid">Submit</button>
+    </form>
+  </ion-list>
+</ion-content>
