@@ -1,14 +1,4 @@
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>home</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding>
-  <button ion-button left (click)= "exit()">logout </button>
-  <br />
-  <p id="test">Hallo World</p>
-</ion-content>
+<ion-tabs>
+    <ion-tab [root]="customerRoot" tabTitle="Customer" tabIcon="information-circle"></ion-tab>
+    <ion-tab [root]="driverRoot" tabTitle="Driver" tabIcon="information-circle"></ion-tab>
+</ion-tabs>

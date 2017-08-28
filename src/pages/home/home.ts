@@ -1,36 +1,24 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, Platform } from 'ionic-angular';
-import { AuthProvider } from '../../providers/auth/auth';
-import { LoginPage } from "../login/login";
+import { IonicPage, NavController } from 'ionic-angular';
+
+/**
+ * Generated class for the HomePage tabs.
+ *
+ * See https://angular.io/docs/ts/latest/guide/dependency-injection.html for
+ * more info on providers and Angular DI.
+ */
+
+@IonicPage()
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html',
+  templateUrl: 'home.html'
 })
 export class HomePage {
-  authData:AuthProvider;
-  confirmm:string= 'Do you want to logout?';
-  constructor(public navCtrl: NavController, authdata:AuthProvider,
-  platform: Platform,public alertCtrl: AlertController,) {
-    this.authData = authdata;
-  }
-  
-  exit(){
-      let alert = this.alertCtrl.create({
-        title: 'Confirm',
-        message:this.confirmm,
-        buttons: [{
-          text: "Agree",
-          handler: () => {this.logout();}
-        }, {
-          text: "Disagree",
-          role: 'cancel'
-        }]
-      })
-      alert.present();
-  }
-  
-  logout(){
-      this.authData.logoutUser();
-      this.navCtrl.setRoot(LoginPage);
-  }
+
+  customerRoot = 'CustomerPage'
+  driverRoot = 'DriverPage'
+
+
+  constructor(public navCtrl: NavController) {}
+
 }
