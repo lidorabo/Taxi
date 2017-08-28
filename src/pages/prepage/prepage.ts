@@ -38,7 +38,7 @@ export class PrepagePage {
         var uid = firebase.auth().currentUser.uid;
         var database = firebase.database().ref();
         database.child(this.authdata.userstable).child(uid).on("value", data => {
-          if (data.hasChild('phone')) {
+          if (data.hasChild(this.phonefirebase)) {
             this.navCtrl.setRoot(HomePage)
           }
           else {

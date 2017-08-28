@@ -11,6 +11,8 @@ import { Facebook } from '@ionic-native/facebook'
 import { GooglePlus } from '@ionic-native/google-plus';
 import { AuthProvider } from '../providers/auth/auth';
 import { HomePage } from '../pages/home/home';
+//Importing KeyBoard
+import { IonDigitKeyboard } from '../components/ion-digit-keyboard/ion-digit-keyboard.module';
 // Importing AF2 Module
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -44,6 +46,7 @@ import firebase from 'firebase';
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(config),
     AngularFireAuthModule,
+    IonDigitKeyboard,
   ],
   bootstrap: [IonicApp],
   entryComponents: [

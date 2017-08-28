@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import firebase from 'firebase';
 import { Observable } from 'rxjs/Observable';
-import * as admin from 'firebase-admin';
 @Injectable()
 export class AuthProvider {
   public readonly webclientidprop: string = 'webClientId';
@@ -58,7 +57,7 @@ export class AuthProvider {
       phone:phonen
     })
   }
-  public getValueFromDatabase(path:string):any{
+  public getValueFromDatabaseOnce(path:string):any{
     var field:string;
     var query=firebase.database().ref('/'+this.userstable+ '/' +path);
     query.once('value',function(snapshot){
