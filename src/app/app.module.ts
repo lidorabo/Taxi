@@ -17,6 +17,7 @@ import { IonDigitKeyboard } from '../components/ion-digit-keyboard/ion-digit-key
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { SignupPage } from "../pages/signup/signup";
+import { AutocompletePage } from '../pages/autocomplete/autocomplete';
 import { ResetpasswordPage } from "../pages/resetpassword/resetpassword";
 import firebase from 'firebase';
 // Initialize Firebase
@@ -37,6 +38,7 @@ import firebase from 'firebase';
     PrepagePage,
     LoginPage,
     SignupPage,
+    AutocompletePage,
     ResetpasswordPage,
     HomePage,
     PhonenumberPage
@@ -56,6 +58,7 @@ import firebase from 'firebase';
     SignupPage,
     ResetpasswordPage,
     HomePage,
+    AutocompletePage,
     PhonenumberPage
   ],
   providers: [

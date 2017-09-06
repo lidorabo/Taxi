@@ -19,4 +19,10 @@
 
 <ion-content padding>
 
+    <ion-list>
+        <ion-item>
+          <ion-input (click)="showAddressModal()" [(ngModel)]="address.place" type="text" placeholder="Pick an address"></ion-input>
+        </ion-item>
+      </ion-list>
+
 </ion-content>
