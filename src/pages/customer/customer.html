@@ -21,7 +21,8 @@
 
     <ion-list>
         <ion-item>
-          <ion-input (click)="showAddressModal()" [(ngModel)]="address.place" type="text" placeholder="Pick an address"></ion-input>
+            <ion-label floating primary>כתובת</ion-label>
+          <ion-input (click)="showAddressModal()" [(ngModel)]="address.place" type="text"></ion-input>
         </ion-item>
       </ion-list>
 

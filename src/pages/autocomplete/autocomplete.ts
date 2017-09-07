@@ -34,7 +34,7 @@ export class AutocompletePage {
     }
     let me = this;
     let config = { 
-      types:  ['geocode'], 
+      types:  ['establishment','geocode'], 
       input: this.autocomplete.query, 
       componentRestrictions: { country: 'IL' } 
   }
