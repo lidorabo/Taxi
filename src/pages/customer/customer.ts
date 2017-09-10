@@ -3,17 +3,23 @@ import { IonicPage,NavController, AlertController, Platform, ModalController } f
 import { AuthProvider } from '../../providers/auth/auth';
 import { LoginPage } from "../login/login";
 import { AutocompletePage } from "../autocomplete/autocomplete";
+import { HttpClient } from "@angular/common/http";
+
+
+
 @IonicPage()
 @Component({
   selector: 'page-customer',
   templateUrl: 'customer.html',
 })
+
 export class CustomerPage {
   address;
+  flightNum: any;
   authData:AuthProvider;
   confirmm:string= 'Do you want to logout?';
   constructor(public navCtrl: NavController, authdata:AuthProvider,
-  platform: Platform,public alertCtrl: AlertController, private modalCtrl: ModalController) {
+  platform: Platform,public alertCtrl: AlertController, private modalCtrl: ModalController, private http: HttpClient) {
     this.authData = authdata;
     this.address = {
       place: ''
@@ -48,4 +54,14 @@ export class CustomerPage {
       this.authData.logoutUser();
       this.navCtrl.setRoot(LoginPage);
   }
+
+
+  testFlight(){
+     // Make the HTTP request:
+     this.http.get('https://taxiserver.herokuapp.com/api/load/' + this.flightNum).subscribe(data => {
+      // Read the result field from the JSON response.
+      console.log(data);
+    });
+  }
+
 }

@@ -24,6 +24,13 @@
             <ion-label floating primary>כתובת</ion-label>
           <ion-input (click)="showAddressModal()" [(ngModel)]="address.place" type="text"></ion-input>
         </ion-item>
+        <ion-item>
+          <ion-label floating primary>מספר טיסה</ion-label>
+        <ion-input [(ngModel)]="flightNum" type="text"></ion-input>
+      </ion-item>
       </ion-list>
+      <button ion-button round outline (click)="testFlight()">
+        flyyyyyy
+      </button>
 
 </ion-content>

@@ -11,6 +11,7 @@ import { Facebook } from '@ionic-native/facebook'
 import { GooglePlus } from '@ionic-native/google-plus';
 import { AuthProvider } from '../providers/auth/auth';
 import { HomePage } from '../pages/home/home';
+import { HttpClientModule } from '@angular/common/http';
 //Importing KeyBoard
 import { IonDigitKeyboard } from '../components/ion-digit-keyboard/ion-digit-keyboard.module';
 // Importing AF2 Module
@@ -45,6 +46,7 @@ import firebase from 'firebase';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(config),
     AngularFireAuthModule,
