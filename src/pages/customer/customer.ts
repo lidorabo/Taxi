@@ -32,14 +32,13 @@ export class CustomerPage {
   showAddressModal () {
     let modal = this.modalCtrl.create(AutocompletePage);
     let me = this;
-    var temp;
     modal.onDidDismiss(data => {
-      temp = data;
+      this.address.place = data;
       var geocoder = new google.maps.Geocoder();
-      geocoder.geocode( { 'address': temp}, function(results, status) {
+      geocoder.geocode( { 'address': this.address.place}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
           this.address = {
-            place: temp,
+            place: data,
             latitude: results[0].geometry.location.lat(),
             longitude: results[0].geometry.location.lng()
           };
