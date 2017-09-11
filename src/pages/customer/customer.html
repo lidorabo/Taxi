@@ -28,8 +28,11 @@
           <ion-label floating primary>מספר טיסה</ion-label>
         <ion-input [(ngModel)]="flightNum" type="text"></ion-input>
       </ion-item>
+      <ion-item *ngIf="flightInfo">
+          <p>{{ flightInfo }}</p>
+      </ion-item>
       </ion-list>
-      <button ion-button round outline (click)="testFlight()">
+      <button ion-button round outline (click)="getFlightInfo()">
         flyyyyyy
       </button>
 
