@@ -54,12 +54,13 @@ export class CustomerPage implements OnInit {
       var geocoder = new google.maps.Geocoder();
       geocoder.geocode( { 'address': this.address.place}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
-          let a,b;
-          a = results[0].geometry.location.lat();
-          b = results[0].geometry.location.lng();
-          //this.address.latitude = results[0].geometry.location.lat();
-        console.log("Latitude: "+results[0].geometry.location.lat());
-        console.log("Longitude: "+results[0].geometry.location.lng());
+          this.address = {
+            place: data,
+            latitude: results[0].geometry.location.lat(),
+            longitude: results[0].geometry.location.lng()
+          };
+        console.log("Latitude: "+ this.address.latitude);
+        console.log("Longitude: "+ this.address.longitude);
         } 
   
         else {
