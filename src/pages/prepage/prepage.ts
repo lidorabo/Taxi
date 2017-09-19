@@ -1,10 +1,11 @@
+import { OrdersPage } from './../orders/orders';
+import { FlightinfoPage } from './../flightinfo/flightinfo';
 import { PhonenumberPage } from './../phonenumber/phonenumber';
 import { AuthProvider } from './../../providers/auth/auth';
 import { LoginPage } from './../login/login';
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
-import { HomePage } from "../home/home";
 import firebase from 'firebase';
 @Component({
   selector: 'page-prepage',
@@ -39,7 +40,7 @@ export class PrepagePage {
         var database = firebase.database().ref();
         database.child(this.authdata.userstable).child(uid).on("value", data => {
           if (data.hasChild(this.phonefirebase)) {
-            this.navCtrl.setRoot(HomePage)
+            this.navCtrl.setRoot(OrdersPage);
           }
           else {
             this.navCtrl.setRoot(PhonenumberPage);

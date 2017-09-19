@@ -9,11 +9,35 @@ $font-path: "../assets/fonts";
 // The app direction is used to include
 // rtl styles in your app. For more info, please see:
 // http://ionicframework.com/docs/theming/rtl-support/
-$app-direction: ltr;
-
-
+$app-direction: rtl;
+$text-input-highlight-color-invalid:none;
+$text-input-highlight-color-valid:  none;
+$text-input-md-highlight-color:none;
 @import "ionic.globals";
-
+.rtl{
+  direction: rtl;
+  .invalid{
+    color:red;
+}
+  }
+  .alert-md{
+    .alert-title{
+      white-space: nowrap;
+       
+   }
+   direction: rtl;
+   .alert-title{
+       position: relative;
+       right: -20px;
+       
+   }
+   .alert-tappable{
+       position: relative;
+       right: -10px; 
+   }
+  }
+  
+  
 
 // Shared Variables
 // --------------------------------------------------
@@ -21,10 +45,6 @@ $app-direction: ltr;
 // the Sass variables found in Ionic's source scss files.
 // To view all the possible Ionic variables, see:
 // http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
-
-
-
-
 // Named Color Variables
 // --------------------------------------------------
 // Named colors makes it easy to reuse colors on various components.
@@ -32,7 +52,6 @@ $app-direction: ltr;
 // to match your app's branding. Ionic uses a Sass map of
 // colors so you can add, rename and remove colors as needed.
 // The "primary" color is the only required color in the map.
-
 $colors: (
   primary:    #488aff,
   secondary:  #32db64,
@@ -40,8 +59,6 @@ $colors: (
   light:      #f4f4f4,
   dark:       #222
 );
-
-
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here

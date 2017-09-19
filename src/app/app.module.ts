@@ -1,3 +1,7 @@
+import { TimearrivalPage } from './../pages/timearrival/timearrival';
+import { OrdersPage } from './../pages/orders/orders';
+import { FlightinfoPage } from './../pages/flightinfo/flightinfo';
+import { AddressPage } from './../pages/address/address';
 import { PhonenumberPage } from './../pages/phonenumber/phonenumber';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -10,8 +14,8 @@ import { LoginPage } from '../pages/login/login';
 import { Facebook } from '@ionic-native/facebook'
 import { GooglePlus } from '@ionic-native/google-plus';
 import { AuthProvider } from '../providers/auth/auth';
-import { HomePage } from '../pages/home/home';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpModule } from '@angular/http';
 //Importing KeyBoard
 import { IonDigitKeyboard } from '../components/ion-digit-keyboard/ion-digit-keyboard.module';
 // Importing AF2 Module
@@ -21,6 +25,8 @@ import { SignupPage } from "../pages/signup/signup";
 import { AutocompletePage } from '../pages/autocomplete/autocomplete';
 import { ResetpasswordPage } from "../pages/resetpassword/resetpassword";
 import firebase from 'firebase';
+import { ValidatorProvider } from "../providers/validator/validator";
+import { MyDatePickerModule } from 'mydatepicker';
 // Initialize Firebase
   export const config = {
     apiKey: "AIzaSyCtY_BAKROjnZykQhdiUXb6q4uJnrxCrS8",
@@ -41,8 +47,11 @@ import firebase from 'firebase';
     SignupPage,
     AutocompletePage,
     ResetpasswordPage,
-    HomePage,
-    PhonenumberPage
+    PhonenumberPage,
+    AddressPage,
+    FlightinfoPage,
+    OrdersPage,
+    TimearrivalPage
   ],
   imports: [
     BrowserModule,
@@ -51,6 +60,11 @@ import firebase from 'firebase';
     AngularFireModule.initializeApp(config),
     AngularFireAuthModule,
     IonDigitKeyboard,
+    HttpModule,
+    MyDatePickerModule
+  ],
+  exports: [
+    MyDatePickerModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -59,16 +73,20 @@ import firebase from 'firebase';
     LoginPage,
     SignupPage,
     ResetpasswordPage,
-    HomePage,
     AutocompletePage,
-    PhonenumberPage
+    PhonenumberPage,
+    AddressPage,
+    FlightinfoPage,
+    OrdersPage,
+    TimearrivalPage,
+   
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Facebook, GooglePlus,
-    AuthProvider
+    AuthProvider, ValidatorProvider
   ]
 })
 export class AppModule {}

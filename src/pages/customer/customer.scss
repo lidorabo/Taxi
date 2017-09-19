@@ -2,4 +2,42 @@ page-customer {
     ion-icon {
         font-size: 35px; //Preferred size here
     }
+   
+    
 }
+ion-content{
+     .customize{
+         direction: rtl;
+     }
+}
+.alert-md{
+    .alert-title{
+       white-space: nowrap;
+        
+    }
+    direction: rtl;
+    .alert-title{
+        position: relative;
+        right: -20px;
+        
+    }
+    .alert-tappable{
+        position: relative;
+        right: -10px; 
+    }
+    .alert-button-default-md:first-child
+    {
+        position: absolute;
+        right: 20px;       
+
+    }
+    .itmm-inner{
+        border-bottom-color: transparent !important;
+        box-shadow: none !important;
+
+    }
+}
+
+
+
+

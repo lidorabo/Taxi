@@ -16,9 +16,6 @@ $light: #fff !default;
 $dark: #444 !default;
 $opaque-black: rgba(#000, 0.75);
 $opaque-white: rgba(#fff, 0.75);
-
-ion-digit-keyboard { }
-
 ion-digit-keyboard {
 	position: absolute;
 	left: 0; right: 0; bottom: 0;

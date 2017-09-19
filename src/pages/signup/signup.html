@@ -42,8 +42,8 @@
         <ion-label stacked>Confirm Password</ion-label>
         <ion-input formControlName="confirmPassword" type="password" placeholder="Your password"></ion-input>
       </ion-item>
-      <ion-item *ngIf="signupForm.hasError('notEquivalent') && signupForm.controls.password.valid" class="help-block text-danger">
-        <p>The two passwords aren't the same.</p>
+      <ion-item *ngIf="signupForm.hasError('notEquivalent') && signupForm.controls.password.valid" danger padding-left >
+        <p *ngIf="signupForm.hasError('notEquivalent') && signupForm.controls.password.valid" danger padding-left>The two passwords aren't the same.</p>
       </ion-item>
       <button type="submit" round primary [disabled]="!signupForm.valid">Submit</button>
     </form>

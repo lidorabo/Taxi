@@ -1,8 +1,8 @@
-import { validators } from './../../validators/validators';
+import { ValidatorProvider } from './../../providers/validator/validator';
 import { LoginPage } from './../login/login';
 import { Component } from '@angular/core';
 import { NavController, LoadingController, Loading, AlertController } from 'ionic-angular';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, Validator } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
 import firebase from 'firebase';
 @Component({
@@ -15,12 +15,12 @@ export class SignupPage {
   public loading:Loading;
   userInfo: {first_name:string, last_name: string, email: string, phone: string, pass:string, driver: boolean} = {first_name: this.authData.emptystring, last_name: this.authData.emptystring, email: this.authData.emptystring, phone: this.authData.emptystring , pass:this.authData.emptystring, driver: false}; 
   constructor(public nav: NavController, public authData: AuthProvider, 
-    public formBuilder: FormBuilder, public fb: FormBuilder, public loadingCtrl: LoadingController, 
-    public alertCtrl: AlertController) {
+    public formBuilder: FormBuilder, public loadingCtrl: LoadingController, 
+    public alertCtrl: AlertController,private validator:ValidatorProvider) {
     this.signupForm = formBuilder.group({
-      first_name: [this.authData.emptystring, [Validators.required, Validators.minLength(2),validators.nameValid]],
-      last_name : [this.authData.emptystring, [Validators.required, Validators.minLength(2), validators.nameValid]],
-      phone: [this.authData.emptystring, validators.phoneValidator],
+      first_name: [this.authData.emptystring, [Validators.required, Validators.minLength(2)]],
+      last_name : [this.authData.emptystring, [Validators.required, Validators.minLength(2),]],
+      phone: [this.authData.emptystring],
       email: [this.authData.emptystring, Validators.compose([Validators.required,Validators.email])],
       password: [this.authData.emptystring, Validators.compose([Validators.minLength(6), Validators.required])],
       confirmPassword: [this.authData.emptystring, ]

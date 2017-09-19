@@ -1,9 +1,10 @@
+import { FlightinfoPage } from './../flightinfo/flightinfo';
+import { AddressPage } from './../address/address';
 import { NavController, LoadingController, Loading, AlertController, Platform } from 'ionic-angular';
 import { Component, Injectable } from '@angular/core';
 import { Facebook } from '@ionic-native/facebook';
 import { GooglePlus } from '@ionic-native/google-plus';
 import firebase from 'firebase';
-import { HomePage } from "../home/home";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
 import { ResetpasswordPage } from "../resetpassword/resetpassword";
@@ -35,7 +36,7 @@ export class LoginPage {
     } else {
       this.authData.loginUser(this.loginForm.value.email, this.loginForm.value.password)
         .then(authData => {
-          this.navCtrl.setRoot(HomePage);
+          this.navCtrl.setRoot(FlightinfoPage);
         }, error => {
           this.loading.dismiss().then(() => {
             let alert = this.alertCtrl.create({
@@ -99,7 +100,7 @@ export class LoginPage {
           .then(user => {
             if (this.authData.getValueFromDatabaseOnce(firebase.auth().currentUser.uid) == null)
               this.authData.AddUserToFireBaseDatabse(user.providerData[0].email, user.displayName.split(' ')[0], user.displayName.split(' ')[1], false);
-            this.navCtrl.setRoot(HomePage);
+            this.navCtrl.setRoot(FlightinfoPage);
           })
           .catch(error => alert("Firebase failure: " + JSON.stringify(error)));
       }).catch(err => alert(err));
@@ -109,7 +110,7 @@ export class LoginPage {
       firebase.auth().signInWithPopup(this.authData.googlewebprovider).then((result) => {
         if (this.authData.getValueFromDatabaseOnce(firebase.auth().currentUser.uid) == null)
           this.authData.AddUserToFireBaseDatabse(result.additionalUserInfo.profile.email, result.additionalUserInfo.profile.given_name, result.additionalUserInfo.profile.family_name, false);
-        this.navCtrl.setRoot(HomePage)
+        this.navCtrl.setRoot(FlightinfoPage);
       }).catch(function (error) {
 
       });

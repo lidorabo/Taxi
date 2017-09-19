@@ -1,0 +1,25 @@
+<ion-header>
+  
+    <ion-navbar class="rtl">
+      <ion-title>זמן הגעה</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  <ion-content padding>
+    <ion-list>
+      <form class="rtl" [formGroup]="arrivaltimeForm" (ngSubmit)="sendOrder()">
+        <ion-item>
+          <ion-label>מועד הגעה רצוי לפני המראה</ion-label>
+          <ion-select [selectOptions]="selectOptions"  formControlName="arrivalt" okText="אישור"  cancelText="ביטול" [(ngModel)]="arrivalwantedtime">
+            <ion-option value=60>שעה-שעה וחצי</ion-option>
+            <ion-option value=90>שעה וחצי-שעתיים</ion-option>
+            <ion-option value=120>שעתיים-שעתיים וחצי</ion-option>
+            <ion-option value=150>שעתיים וחצי-שלוש שעות</ion-option>
+            <ion-option value=180>שלוש שעות-שלוש וחצי שעות</ion-option>
+            <ion-option value=210>שלוש וחצי שעות- ארבע שעות</ion-option>
+          </ion-select>
+        </ion-item>
+        <button ion-button round outline type="submit" [disabled]="!arrivaltimeForm.valid">בצע הזמנה</button>
+      </form>
+    </ion-list>
+  </ion-content>

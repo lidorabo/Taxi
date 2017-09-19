@@ -1,9 +1,11 @@
+import { ViewController } from 'ionic-angular';
 import {Component, NgZone} from '@angular/core';
-import {ViewController} from 'ionic-angular';
+
 
 declare var google:any;
 
 @Component({
+  selector:'page-autocomplete',
   templateUrl: './autocomplete.html'
 })
 

@@ -5,7 +5,6 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
     <ion-title>Customer</ion-title>
     <ion-buttons end>
@@ -17,23 +16,46 @@
 </ion-header>
 
 
-<ion-content padding>
-
+<!--<ion-content padding>
+  <div class="customize">
     <ion-list>
+      <form [formGroup]="orderForm" (ngSubmit)="sendOrder()">
         <ion-item>
-            <ion-label floating primary>כתובת</ion-label>
-          <ion-input (click)="showAddressModal()" [(ngModel)]="address.place" type="text"></ion-input>
+          <ion-label>כתובת</ion-label>
+          <ion-input  formControlName="address" (click)="showAddressModal()"  [(ngModel)]="address.place" type="text"></ion-input>
+        </ion-item>
+        <p *ngIf="!orderForm.controls.address.valid&& address.place" danger padding-left>הכתובת שהוזנה אינה תקינה</p>
+        <ion-item>
+          <ion-label>מספר טיסה</ion-label>
+          <ion-input formControlName="flightnumber" [(ngModel)]="flightNum" type="text"></ion-input>
+        </ion-item>
+        <p *ngIf="!orderForm.controls.flightnumber.valid && orderForm.controls.flightnumber.dirty" danger padding-left>מספר הטיסה שהוזן אינו תקין</p>
+        <ion-item *ngIf="flightInfo">
+          <p>{{ flightInfo }}</p>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>מספר נוסעים</ion-label>
+          <ion-select formControlName="numop"   okText="אישור" cancelText="ביטול"  [(ngModel)]="numberofpassengers">
+            <ion-option value=1>1</ion-option>
+            <ion-option value=2>2</ion-option>
+            <ion-option value=3>3</ion-option>
+            <ion-option value=4>4</ion-option>
+          </ion-select>
         </ion-item>
         <ion-item>
-          <ion-label floating primary>מספר טיסה</ion-label>
-        <ion-input [(ngModel)]="flightNum" type="text"></ion-input>
-      </ion-item>
-      <ion-item *ngIf="flightInfo">
-          <p>{{ flightInfo }}</p>
-      </ion-item>
-      </ion-list>
-      <button ion-button round outline (click)="getFlightInfo()">
-        flyyyyyy
-      </button>
-
-</ion-content>
+          <ion-label>מועד הגעה רצוי לפני המראה</ion-label>
+          <ion-select formControlName="arrivalt" okText="אישור"  cancelText="ביטול" [(ngModel)]="arrivalwantedtime">
+            <ion-option value=60>שעה-שעה וחצי</ion-option>
+            <ion-option value=90>שעה וחצי-שעתיים</ion-option>
+            <ion-option value=120>שעתיים-שעתיים וחצי</ion-option>
+            <ion-option value=150>שעתיים וחצי-שלוש שעות</ion-option>
+            <ion-option value=180>שלוש שעות-שלוש וחצי שעות</ion-option>
+            <ion-option value=210>שלוש וחצי שעות- ארבע שעות</ion-option>
+          </ion-select>
+        </ion-item>
+        <button ion-button round outline type="submit" [disabled]="!orderForm.valid">בצע הזמנה</button>
+      </form>
+    </ion-list>
+  </div>
+</ion-content>-->

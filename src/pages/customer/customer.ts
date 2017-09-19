@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicPage,NavController, AlertController, Platform, ModalController } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { LoginPage } from "../login/login";
 import { AutocompletePage } from "../autocomplete/autocomplete";
 import { HttpClient } from "@angular/common/http";
-
+import { FormBuilder, FormGroup, Validators, NgControl } from '@angular/forms';
 declare var google:any;
 
 @IonicPage()
@@ -13,23 +13,40 @@ declare var google:any;
   templateUrl: 'customer.html',
 })
 
-export class CustomerPage {
+export class CustomerPage implements OnInit {
+  ngOnInit(): void {
+    
+  }
   address;
-  flightNum: any;
   flightInfo: string;
   authData:AuthProvider;
-  confirmm:string= 'Do you want to logout?';
+  numberofpassengers:number;
+  confirmm:string= '?האם אתה בטוח כי אתה רוצה להתנתק';
+  arrivalwantedtime:number;
+  orderForm:FormGroup;
+  valid:false;
   constructor(public navCtrl: NavController, authdata:AuthProvider,
-  platform: Platform,public alertCtrl: AlertController, private modalCtrl: ModalController, private http: HttpClient) {
+  platform: Platform,public alertCtrl: AlertController,private formBuilder: FormBuilder, private modalCtrl: ModalController, private http: HttpClient) {
     this.authData = authdata;
     this.address = {
       place: '',
       latitude: '',
       longitude: ''
     };
+    this.orderForm = formBuilder.group({
+     // address: [[this.authData.emptystring],validators.addressValidator],
+     // flightnumber : [this.authData.emptystring, [Validators.required, validators.flightNumberValidator]],
+      numop:[this.authData.emptystring],
+      arrivalt:[this.authData.emptystring]
+      })
+      this.orderForm.controls.address.valueChanges.subscribe((val)=>{
+        if(this.orderForm.controls.address.invalid)
+          this.orderForm.controls['address'].setErrors({'invalidAddress':true});
+         
+      });
   }
-
   showAddressModal () {
+    
     let modal = this.modalCtrl.create(AutocompletePage);
     let me = this;
     modal.onDidDismiss(data => {
@@ -51,7 +68,8 @@ export class CustomerPage {
       });
     });
     modal.present();
-  }
+    this.orderForm.controls.address.enable;
+    }
   
   exit(){
       let alert = this.alertCtrl.create({
@@ -66,6 +84,7 @@ export class CustomerPage {
         }]
       })
       alert.present();
+      this.orderForm.controls.address.enable;
   }
   
   logout(){
@@ -74,14 +93,15 @@ export class CustomerPage {
   }
 
 
-  getFlightInfo(){
+  /*sendOrder(){
      // Make the HTTP request:
      this.http.get('https://taxiserver.herokuapp.com/api/load/' + this.flightNum).subscribe(data => {
       // Read the result field from the JSON response.
       this.flightInfo = "טיסה מספר: " + this.flightNum + " ממריאה בתאריך: " + data["date"] + " בשעה: " + data["time"];
       console.log(data);
-      console.log(this.flightInfo);
+      console.log(this.flightInfo,this.numberofpassengers);
     });
   }
+  */
 
 }

@@ -1,0 +1,34 @@
+<!--
+  Generated template for the AddressPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar class="rtl">
+    <ion-title>כתובת</ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content padding>
+  <ion-list>
+    <form class="rtl" [formGroup]="AddressForm" (ngSubmit)="goToArrivalTimePage()">
+      <ion-item>
+        <ion-label>כתובת</ion-label>
+        <ion-input disabled formControlName="address"  (click)="showAddressModal()"  [(ngModel)]="address.place" type="text"></ion-input>
+      </ion-item>
+      <p class="invalid" *ngIf="AddressForm.controls['address'].hasError('invalidAddress') && address.place " danger padding-left>הכתובת שהוזנה אינה תקינה</p>
+      <ion-item>
+        <ion-label>מספר נוסעים</ion-label>
+        <ion-select [selectOptions]="selectOptions" formControlName="numop"   okText="אישור" cancelText="ביטול"  [(ngModel)]="numberofpassengers">
+          <ion-option value=1>1</ion-option>
+          <ion-option value=2>2</ion-option>
+          <ion-option value=3>3</ion-option>
+          <ion-option value=4>4</ion-option>
+        </ion-select>
+      </ion-item>
+      <button ion-button round outline type="submit" [disabled]="!AddressForm.valid">הבא</button>
+    </form>
+  </ion-list>
+</ion-content>
