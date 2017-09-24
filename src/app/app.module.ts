@@ -27,6 +27,9 @@ import { ResetpasswordPage } from "../pages/resetpassword/resetpassword";
 import firebase from 'firebase';
 import { ValidatorProvider } from "../providers/validator/validator";
 import { MyDatePickerModule } from 'mydatepicker';
+import { DisconnectPage } from '../pages/disconnect/disconnect';
+import { ProfilePage } from '../pages/profile/profile';
+import { DriverPage } from '../pages/driver/driver';
 // Initialize Firebase
   export const config = {
     apiKey: "AIzaSyCtY_BAKROjnZykQhdiUXb6q4uJnrxCrS8",
@@ -51,7 +54,11 @@ import { MyDatePickerModule } from 'mydatepicker';
     AddressPage,
     FlightinfoPage,
     OrdersPage,
-    TimearrivalPage
+    TimearrivalPage,
+    DriverPage,
+    ProfilePage,
+    DisconnectPage,
+    
   ],
   imports: [
     BrowserModule,
@@ -79,6 +86,11 @@ import { MyDatePickerModule } from 'mydatepicker';
     FlightinfoPage,
     OrdersPage,
     TimearrivalPage,
+    DriverPage,
+    ProfilePage,
+    DisconnectPage,
+
+
    
   ],
   providers: [

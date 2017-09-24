@@ -46,8 +46,6 @@ export class AddressPage {
         if (status == google.maps.GeocoderStatus.OK) {
           this.address.latitude = results[0].geometry.location.lat();
           this.address.longitude = results[0].geometry.location.lng();
-        console.log("Latitude: "+results[0].geometry.location.lat());
-        console.log("Longitude: "+results[0].geometry.location.lng());
         } 
   
         else {
@@ -61,8 +59,11 @@ export class AddressPage {
   {
     this.navCtrl.push(TimearrivalPage,{
       flightNum:this.navParams.get('flightNum'),
-      address:this.address,
-      numofp: this.numberofpassengers
+      date:this.navParams.get('date'),
+      lat:this.address.latitude,
+      lng: this.address.longitude,
+      numOfP: this.numberofpassengers,
+      time: this.navParams.get('time')
     })
   }
   ionViewDidLoad() {

@@ -35,7 +35,7 @@ export class ValidatorProvider {
     return { 'invalidAddress': true };
   }
   flightNumberValidator(control: FormControl) {
-    const regexflightnum = /^[A-Z]{1,4}[0-9]{2,5}$/.test(control.value);
+    const regexflightnum = /^[A-Z0-9]{1,4}[0-9]{2,5}$/.test(control.value);
     if (regexflightnum)
       return null;
     else

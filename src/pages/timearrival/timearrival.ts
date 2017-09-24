@@ -4,7 +4,7 @@ import { AuthProvider } from './../../providers/auth/auth';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
+import firebase from 'firebase';
 /**
  * Generated class for the TimearrivalPage page.
  *
@@ -29,10 +29,20 @@ export class TimearrivalPage {
   }
   sendOrder()
   {
-    console.log(firebase.auth().currentUser.uid,this.navParams.get('flightNum'),this.navParams.get('address'),this.navParams.get('numofp'));
+
+    const url = 'https://taxiserver.herokuapp.com/api/orders'
     var order = {
-      uid: firebase.auth().currentUser.uid
+      uid: firebase.auth().currentUser.uid,
+      flightNo: this.navParams.get('flightNum'),
+      dDate: this.navParams.get('date'),
+      lat: this.navParams.get('lat'),
+      lng: this.navParams.get('lng'),
+      numOfPassengers: this.navParams.get('numOfP'),
+      departureTime: this.navParams.get('time'),
+      arrivalRange: Number(this.arrivalwantedtime)
     }
+    this.http.post(url,order).subscribe(()=>{
+    });
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad TimearrivalPage');
