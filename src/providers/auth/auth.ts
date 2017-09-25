@@ -33,15 +33,6 @@ export class AuthProvider {
   logoutUser(): firebase.Promise<any> {
     return this.afAuth.auth.signOut();
   }
-  matchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
-    return (group: FormGroup) => {
-      let passwordInput = group.controls[passwordKey];
-      let passwordConfirmationInput = group.controls[passwordConfirmationKey];
-      if (passwordInput.value !== passwordConfirmationInput.value) {
-        return passwordConfirmationInput.setErrors({ notEquivalent: true })
-      }
-    }
-  }
   AddUserToFireBaseDatabse(email: string, firstname: string, lastname: string, driver: boolean): void {
 
     firebase.database().ref(this.userstable + '/' + firebase.auth().currentUser.uid).set({

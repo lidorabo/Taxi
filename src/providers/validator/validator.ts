@@ -1,6 +1,6 @@
 import { FlightinfoPage } from './../../pages/flightinfo/flightinfo';
 import { AddressPage } from './../../pages/address/address';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Injectable, Injector } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -40,6 +40,16 @@ export class ValidatorProvider {
       return null;
     else
       return { 'invalidFlightNumber': true };
+  }
+  matchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
+    return (group: FormGroup) => {
+      let passwordInput = group.controls[passwordKey];
+      let passwordConfirmationInput = group.controls[passwordConfirmationKey];
+      if (passwordInput.value !== passwordConfirmationInput.value) {
+        return passwordConfirmationInput.setErrors({ notEquivalent: true })
+        
+      }
+    }
   }
 
 

@@ -4,15 +4,18 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
 
-  <ion-navbar>
-    <ion-title>DriverPage</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding>
-
-</ion-content>
+<menu [pages]="pages" title="נהג" ></menu>
+<!-- <ion-content *ngIf="!isDriverhtml" padding>
+    <ion-list>
+        <form class="rtl" [formGroup]="driverRegisterForm" (ngSubmit)="sendRequest()">
+          <ion-item>
+            <ion-label floating primary>מספר רכב</ion-label>
+            <ion-input formControlName="car_num" [(ngModel)]="car_id" type="text"></ion-input>
+          </ion-item>
+          <p class="invalid" *ngIf="!driverRegisterForm.controls.car_num.valid && driverRegisterForm.controls.car_num.dirty" danger
+            padding-left>מספר רכב אינו תקין</p>
+          <button ion-button round outline type="submit" [disabled]="!driverRegisterForm.valid">הבא</button>
+        </form>
+      </ion-list>
+</ion-content> -->

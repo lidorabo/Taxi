@@ -3,6 +3,12 @@ import { Platform, LoadingController} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { PrepagePage } from '../pages/prepage/prepage';
+import { DisconnectPage } from '../pages/disconnect/disconnect';
+import { ProfilePage } from '../pages/profile/profile';
+import { DriverPage } from '../pages/driver/driver';
+import { FlightinfoPage } from './../pages/flightinfo/flightinfo';
+
+
 @Component({
   templateUrl: 'app.html'
 })

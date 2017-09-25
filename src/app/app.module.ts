@@ -30,6 +30,7 @@ import { MyDatePickerModule } from 'mydatepicker';
 import { DisconnectPage } from '../pages/disconnect/disconnect';
 import { ProfilePage } from '../pages/profile/profile';
 import { DriverPage } from '../pages/driver/driver';
+import { MenuComponent } from '../components/menu/menu';
 // Initialize Firebase
   export const config = {
     apiKey: "AIzaSyCtY_BAKROjnZykQhdiUXb6q4uJnrxCrS8",
@@ -58,6 +59,7 @@ import { DriverPage } from '../pages/driver/driver';
     DriverPage,
     ProfilePage,
     DisconnectPage,
+    MenuComponent
     
   ],
   imports: [
@@ -68,7 +70,7 @@ import { DriverPage } from '../pages/driver/driver';
     AngularFireAuthModule,
     IonDigitKeyboard,
     HttpModule,
-    MyDatePickerModule
+    MyDatePickerModule,
   ],
   exports: [
     MyDatePickerModule

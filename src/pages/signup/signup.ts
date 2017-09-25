@@ -24,7 +24,7 @@ export class SignupPage {
       email: [this.authData.emptystring, Validators.compose([Validators.required,Validators.email])],
       password: [this.authData.emptystring, Validators.compose([Validators.minLength(6), Validators.required])],
       confirmPassword: [this.authData.emptystring, ]
-    }, {validator: this.authData.matchingPasswords('password', 'confirmPassword')})
+    }, {validator: validator.matchingPasswords('password', 'confirmPassword')})
 
   }
    
