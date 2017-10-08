@@ -1,19 +1,14 @@
-import { PhonenumberPage } from './../phonenumber/phonenumber';
 import { ValidatorProvider } from './../../providers/validator/validator';
 import { HttpClient } from '@angular/common/http';
 import { AddressPage } from './../address/address';
 import { AuthProvider } from './../../providers/auth/auth';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, Injectable, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Nav } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Nav, MenuController } from 'ionic-angular';
 import { IMyDpOptions, IMyInputFieldChanged } from "mydatepicker";
 import { RequestOptions } from '@angular/http';
-import { LoginPage } from '../login/login';
-import {MenuComponent} from '../../components/menu/menu'
-import { DriverPage } from '../driver/driver';
-import { ProfilePage } from '../profile/profile';
-import { DisconnectPage } from '../disconnect/disconnect';
 import { Page } from '../page/page';
+import {MyApp} from '../../app/app.component'
 /**
  * Generated class for the FlightinfoPage page.
  *
@@ -30,7 +25,6 @@ export class FlightinfoPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad FlightinfoPage');
   }
-  pages:Page[] = [new Page(DriverPage,'נהג'),new Page(ProfilePage,'עריכת פרטים אישיים'),new Page(DisconnectPage,'התנתק')];
   flightNum: string;
   flightNumForm: FormGroup;
   checkexist: boolean = true;
@@ -45,9 +39,26 @@ export class FlightinfoPage {
     editableDateField: false,
     disableUntil: { year: this.now['_a'][0], month: this.now['_a'][1] + 1, day: this.now['_a'][2] }
   };
+  ionViewDidEnter(){
+    if(!this.authData.is_Admin())
+    {
+      this.menu.enable(true,MyApp.menu_flight_user);
+      this.menu.enable(false,MyApp.menu_admin);
+      this.menu.enable(false,MyApp.menu_driver_user);
+      this.menu.enable(false,MyApp.menu_driver_admin);
+      this.menu.enable(false,MyApp.menu_flight_admin);
+      
+    }
+    else{
+      this.menu.enable(false,MyApp.menu_flight_user);
+      this.menu.enable(false,MyApp.menu_admin);
+      this.menu.enable(false,MyApp.menu_driver_user);
+      this.menu.enable(false,MyApp.menu_driver_admin);
+      this.menu.enable(true,MyApp.menu_flight_admin);
+    }
+      }
   private date: string = this.placeholder;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, private authData: AuthProvider, private http: HttpClient, validator: ValidatorProvider) {
-
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, private authData: AuthProvider, private http: HttpClient, validator: ValidatorProvider,private menu:MenuController) {
     this.flightNumForm = formBuilder.group({
       flightnumber: [this.authData.emptystring, [Validators.required, validator.flightNumberValidator]],
       flight_date: [this.authData.emptystring, Validators.required]
@@ -57,27 +68,6 @@ export class FlightinfoPage {
   disableErrors() {
     this.flightNumForm.controls['flightnumber'].patchValue(this.flightNumForm.controls['flightnumber'].value.replace(/\s/g, ""));
     this.checkexist = true;
-  }
-  return_Day() {
-    var date = this.moment(this.flightNumForm.controls['flight_date'].value.date.year + '/' + this.flightNumForm.controls['flight_date'].value.date.month + '/' + this.flightNumForm.controls['flight_date'].value.date.day).locale('he');
-    var day_number = date.day();
-    switch (day_number) {
-      case (0):
-        return 'יום ראשון';
-      case (1):
-        return 'יום שני';
-      case (2):
-        return 'יום שלישי';
-      case (3):
-        return 'יום רביעי';
-      case (4):
-        return 'יום חמישי';
-      case (5):
-        return 'יום שישי';
-      case (6):
-        return 'יום שבת';
-    }
-
   }
   checkDate(data) {
     var flight_time = this.moment(data.date + ' ' + data.time, "DD/MM/YYYY HH:mm");
@@ -90,6 +80,7 @@ export class FlightinfoPage {
 
   }
   checkFlight(info) {
+    this.checkexist = true;
     var airport_name = 'נמל התעופה בן-גוריון';
     if (!this.checkDate(info)) {
       this.errormessage = 'מספר טיסתך אינו בתוקף';
@@ -105,7 +96,7 @@ export class FlightinfoPage {
     this.flightStatus().then((data) => {
       if (data.hasOwnProperty('error')) {
         this.checkexist = false;
-        this.errormessage = 'מספר הטיסה שהוזן אינו קיים במערכת';
+        this.errormessage = 'מספר הטיסה שהוזן אינו קיים בתאריך שהוזן';
       }
 
       else {

@@ -23,7 +23,8 @@ export class AddressPage {
   address = {
     place: '',
     latitude: '',
-    longitude: ''
+    longitude: '',
+    city: ''
   };
   selectOptions={
     cssClass:'address'
@@ -44,6 +45,7 @@ export class AddressPage {
       var geocoder = new google.maps.Geocoder();
       geocoder.geocode( { 'address': this.address.place},(results, status)=> {
         if (status == google.maps.GeocoderStatus.OK) {
+          this.address.city = results[0].formatted_address.split(',')[1];
           this.address.latitude = results[0].geometry.location.lat();
           this.address.longitude = results[0].geometry.location.lng();
         } 
@@ -63,7 +65,8 @@ export class AddressPage {
       lat:this.address.latitude,
       lng: this.address.longitude,
       numOfP: this.numberofpassengers,
-      time: this.navParams.get('time')
+      time: this.navParams.get('time'),
+      city: this.address.city
     })
   }
   ionViewDidLoad() {

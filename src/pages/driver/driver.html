@@ -1,21 +1,38 @@
-<!--
-  Generated template for the DriverPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-
-<menu [pages]="pages" title="נהג" ></menu>
-<!-- <ion-content *ngIf="!isDriverhtml" padding>
+<ion-header *ngIf="isDriverhtml" class="rtl" >
+    <ion-navbar>
+      <ion-title >נהג</ion-title>
+       <ion-buttons left>
+        <button  ion-button  icon-only menuToggle >
+              <ion-icon name="menu"></ion-icon>
+            </button>
+      </ion-buttons>
+    </ion-navbar>
+  </ion-header>
+  <ion-header class="rtl" *ngIf="!isDriverhtml">
+      <ion-navbar>
+        <ion-title >AirTaxi</ion-title>
+      </ion-navbar>
+    </ion-header>
+<ion-content padding>
+ <ion-content *ngIf="!isDriverhtml" padding>
     <ion-list>
-        <form class="rtl" [formGroup]="driverRegisterForm" (ngSubmit)="sendRequest()">
+        <form class="rtl" [formGroup]="driverRegisterForm" (ngSubmit)="sendRequestDriver()">
           <ion-item>
             <ion-label floating primary>מספר רכב</ion-label>
-            <ion-input formControlName="car_num" [(ngModel)]="car_id" type="text"></ion-input>
+            <ion-input  formControlName="car_num" [(ngModel)]="car_id" type="text"></ion-input>
           </ion-item>
           <p class="invalid" *ngIf="!driverRegisterForm.controls.car_num.valid && driverRegisterForm.controls.car_num.dirty" danger
             padding-left>מספר רכב אינו תקין</p>
-          <button ion-button round outline type="submit" [disabled]="!driverRegisterForm.valid">הבא</button>
+            <ion-item>
+              <ion-label floating primary>ת"ז</ion-label>
+              <ion-input formControlName="identity_id" [(ngModel)]="identity_id_num" type="text"></ion-input>
+            </ion-item>
+            <p class="invalid" *ngIf="!driverRegisterForm.controls.identity_id.valid && driverRegisterForm.controls.identity_id.dirty" danger padding left>מספר תעודת הזהות שהוזנה שגויה</p>
+            <br>
+            <button (click)="choosePictures()" type="button" ion-button round outline >בחר מסמכים</button><span [class.invalid]="num_of_images == 'לא נבחרו קבצים' ">{{num_of_images}}</span>
+            <br>
+            <br>
+          <button  ion-button round outline type="submit" [disabled]="checkNotValid()">שלח</button>
         </form>
       </ion-list>
-</ion-content> -->
+</ion-content>

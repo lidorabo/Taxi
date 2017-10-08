@@ -1,10 +1,10 @@
 import { ValidatorProvider } from './../../providers/validator/validator';
-import { LoginPage } from './../login/login';
 import { Component } from '@angular/core';
 import { NavController, LoadingController, Loading, AlertController } from 'ionic-angular';
-import { FormBuilder, FormGroup, Validators, Validator } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
 import firebase from 'firebase';
+import {Permissions} from '../../enums'
 @Component({
   selector: 'page-signup',
   templateUrl: 'signup.html',
@@ -13,10 +13,10 @@ import firebase from 'firebase';
 export class SignupPage {
   public signupForm:FormGroup;
   public loading:Loading;
-  userInfo: {first_name:string, last_name: string, email: string, phone: string, pass:string, driver: boolean} = {first_name: this.authData.emptystring, last_name: this.authData.emptystring, email: this.authData.emptystring, phone: this.authData.emptystring , pass:this.authData.emptystring, driver: false}; 
+  userInfo: {first_name:string, last_name: string, email: string, phone: string, pass:string, permission: number} = {first_name: this.authData.emptystring, last_name: this.authData.emptystring, email: this.authData.emptystring, phone: this.authData.emptystring , pass:this.authData.emptystring, permission: Permissions.User}; 
   constructor(public nav: NavController, public authData: AuthProvider, 
     public formBuilder: FormBuilder, public loadingCtrl: LoadingController, 
-    public alertCtrl: AlertController,private validator:ValidatorProvider) {
+    public alertCtrl: AlertController, validator:ValidatorProvider) {
     this.signupForm = formBuilder.group({
       first_name: [this.authData.emptystring, [Validators.required, Validators.minLength(2)]],
       last_name : [this.authData.emptystring, [Validators.required, Validators.minLength(2),]],
@@ -32,7 +32,7 @@ export class SignupPage {
       this.authData.signupUser(this.signupForm.value.email, this.signupForm.value.password)
       .then(() => {
         this.authData.afAuth.auth.signOut();
-        this.authData.AddUserToFireBaseDatabse(this.userInfo.email,this.userInfo.first_name,this.userInfo.last_name,this.userInfo.driver);
+        this.authData.AddUserToFireBaseDatabse(this.userInfo.email,this.userInfo.first_name,this.userInfo.last_name,this.userInfo.permission);
         this.authData.updatePhoneNumber(this.userInfo.phone);
       }, (error) => {
         this.loading.dismiss().then( () => {

@@ -9,6 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
 import { ResetpasswordPage } from "../resetpassword/resetpassword";
 import { SignupPage } from "../signup/signup";
+import {Permissions} from '../../enums'
 @Injectable()
 @Component({
   selector: 'page-login',
@@ -32,7 +33,6 @@ export class LoginPage {
 
   loginUser(): void {
     if (!this.loginForm.valid) {
-      console.log(this.loginForm.value);
     } else {
       this.authData.loginUser(this.loginForm.value.email, this.loginForm.value.password)
         .then(authData => {
@@ -76,14 +76,14 @@ export class LoginPage {
         let credential = firebase.auth.FacebookAuthProvider.credential(loginResponse.authResponse.accessToken);
         firebase.auth().signInWithCredential(credential).then((info) => {
           if (this.authData.getValueFromDatabaseOnce(firebase.auth().currentUser.uid) == null)
-            this.authData.AddUserToFireBaseDatabse(info.providerData[0].email, info.displayName.split(' ')[0], info.displayName.split(' ')[1], false);
+            this.authData.AddUserToFireBaseDatabse(info.providerData[0].email, info.displayName.split(' ')[0], info.displayName.split(' ')[1],Permissions.User);
         })
       })
     }
     else {
       firebase.auth().signInWithPopup(this.authData.facebookwebprovider).then((user) => {
         if (this.authData.getValueFromDatabaseOnce(firebase.auth().currentUser.uid) == null)
-          this.authData.AddUserToFireBaseDatabse(user.additionalUserInfo.profile.email, user.additionalUserInfo.profile.first_name, user.additionalUserInfo.profile.last_name, false);
+          this.authData.AddUserToFireBaseDatabse(user.additionalUserInfo.profile.email, user.additionalUserInfo.profile.first_name, user.additionalUserInfo.profile.last_name, Permissions.User);
       }).catch(function (error) {
       });
     }
@@ -99,7 +99,7 @@ export class LoginPage {
         firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
           .then(user => {
             if (this.authData.getValueFromDatabaseOnce(firebase.auth().currentUser.uid) == null)
-              this.authData.AddUserToFireBaseDatabse(user.providerData[0].email, user.displayName.split(' ')[0], user.displayName.split(' ')[1], false);
+              this.authData.AddUserToFireBaseDatabse(user.providerData[0].email, user.displayName.split(' ')[0], user.displayName.split(' ')[1], Permissions.User);
             this.navCtrl.setRoot(FlightinfoPage);
           })
           .catch(error => alert("Firebase failure: " + JSON.stringify(error)));
@@ -109,7 +109,7 @@ export class LoginPage {
       this.authData.googlewebprovider.addScope(this.authData.emailprop);
       firebase.auth().signInWithPopup(this.authData.googlewebprovider).then((result) => {
         if (this.authData.getValueFromDatabaseOnce(firebase.auth().currentUser.uid) == null)
-          this.authData.AddUserToFireBaseDatabse(result.additionalUserInfo.profile.email, result.additionalUserInfo.profile.given_name, result.additionalUserInfo.profile.family_name, false);
+          this.authData.AddUserToFireBaseDatabse(result.additionalUserInfo.profile.email, result.additionalUserInfo.profile.given_name, result.additionalUserInfo.profile.family_name, Permissions.User);
         this.navCtrl.setRoot(FlightinfoPage);
       }).catch(function (error) {
 

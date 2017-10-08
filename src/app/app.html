@@ -1,1 +1,45 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<ion-menu id="driver_user" class="rtl" [content]="content" side="right">
+    <ion-content>
+        <ng-container *ngFor='let p of pages'>
+            <button *ngIf="p.title!='נהג'&&p.title!='ניהול'" ion-item menuClose (click)="checkPage(p.page)">
+                {{p.title}}
+            </button>
+        </ng-container>
+    </ion-content>
+</ion-menu>
+<ion-menu id="driver_admin" class="rtl" [content]="content" side="right">
+    <ion-content>
+        <ng-container *ngFor='let p of pages'>
+            <button *ngIf="p.title!='נהג'" ion-item menuClose (click)="checkPage(p.page)">
+                {{p.title}}
+            </button>
+        </ng-container>
+    </ion-content>
+</ion-menu>
+<ion-menu id="flight_user" class="rtl" [content]="content" side="right">
+    <ion-content>
+        <ng-container *ngFor='let p of pages'>
+            <button *ngIf="p.title!='הזמנת נסיעה'&&p.title!='ניהול'" ion-item menuClose (click)="checkPage(p.page)">
+                {{p.title}} </button>
+        </ng-container>
+    </ion-content>
+</ion-menu>
+<ion-menu id="flight_admin" class="rtl" [content]="content" side="right">
+    <ion-content>
+        <ng-container *ngFor='let p of pages'>
+            <button ion-item menuClose (click)="checkPage(p.page)">
+                {{p.title}}
+            </button>
+        </ng-container>
+    </ion-content>
+</ion-menu>
+<ion-menu id="admin" class="rtl" [content]="content" side="right">
+    <ion-content>
+        <ng-container *ngFor='let p of pages'>
+            <button *ngIf="p.title!='ניהול'" ion-item menuClose (click)="checkPage(p.page)">
+                {{p.title}}
+            </button>
+        </ng-container>
+    </ion-content>
+</ion-menu>
+<ion-nav [root]="rootPage" #content></ion-nav>

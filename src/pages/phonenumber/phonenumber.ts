@@ -1,10 +1,10 @@
 import { FlightinfoPage } from './../flightinfo/flightinfo';
 import { ValidatorProvider } from './../../providers/validator/validator';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component} from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { IonDigitKeyboardCmp, IonDigitKeyboardOptions } from '../../components/ion-digit-keyboard';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import {IonDigitKeyboardOptions } from '../../components/ion-digit-keyboard';
 
 /**
  * Generated class for the PhonenumberPage page.

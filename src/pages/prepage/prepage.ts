@@ -1,5 +1,4 @@
 import { OrdersPage } from './../orders/orders';
-import { FlightinfoPage } from './../flightinfo/flightinfo';
 import { PhonenumberPage } from './../phonenumber/phonenumber';
 import { AuthProvider } from './../../providers/auth/auth';
 import { LoginPage } from './../login/login';
@@ -30,7 +29,7 @@ export class PrepagePage {
 
   }
   RedirectUser() {
-
+    
     firebase.auth().onAuthStateChanged((user) => {
       if (user == null) {
         this.navCtrl.setRoot(LoginPage);

@@ -30,7 +30,10 @@ import { MyDatePickerModule } from 'mydatepicker';
 import { DisconnectPage } from '../pages/disconnect/disconnect';
 import { ProfilePage } from '../pages/profile/profile';
 import { DriverPage } from '../pages/driver/driver';
-import { MenuComponent } from '../components/menu/menu';
+import { DriverserviceProvider } from '../providers/driverservice/driverservice';
+import { ImagePicker, ImagePickerOptions } from '@ionic-native/image-picker';
+import { AdminPage } from '../pages/admin/admin';
+
 // Initialize Firebase
   export const config = {
     apiKey: "AIzaSyCtY_BAKROjnZykQhdiUXb6q4uJnrxCrS8",
@@ -46,6 +49,7 @@ import { MenuComponent } from '../components/menu/menu';
 @NgModule({
   declarations: [
     MyApp,
+    AdminPage,
     PrepagePage,
     LoginPage,
     SignupPage,
@@ -59,7 +63,8 @@ import { MenuComponent } from '../components/menu/menu';
     DriverPage,
     ProfilePage,
     DisconnectPage,
-    MenuComponent
+    
+
     
   ],
   imports: [
@@ -91,16 +96,15 @@ import { MenuComponent } from '../components/menu/menu';
     DriverPage,
     ProfilePage,
     DisconnectPage,
-
-
-   
+    AdminPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Facebook, GooglePlus,
-    AuthProvider, ValidatorProvider
-  ]
+    AuthProvider, ValidatorProvider,DriverserviceProvider,ImagePicker
+  ],
+  
 })
 export class AppModule {}

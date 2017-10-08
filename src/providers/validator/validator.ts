@@ -1,9 +1,6 @@
-import { FlightinfoPage } from './../../pages/flightinfo/flightinfo';
-import { AddressPage } from './../../pages/address/address';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Injectable, Injector } from '@angular/core';
+import { Injectable} from '@angular/core';
 import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
 
 /*
   Generated class for the ValidatorProvider provider.
@@ -51,7 +48,20 @@ export class ValidatorProvider {
       }
     }
   }
-
+  carId_NumValidator(control:FormControl)
+  {
+    const regexcar_num = /^[0-9]{7,8}$/.test(control.value);
+    if(regexcar_num)
+      return null;
+    return {'invalidCarNumber':true};
+  }
+  identityId_Validator(control:FormControl)
+  {
+    const regexidentityid_num = /^[0-9]{9}$/.test(control.value);
+    if(regexidentityid_num)
+      return null;
+    return {'invalidIdentityIdNumber':true}
+  }
 
 }
 

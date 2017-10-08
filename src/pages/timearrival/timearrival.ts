@@ -39,7 +39,8 @@ export class TimearrivalPage {
       lng: this.navParams.get('lng'),
       numOfPassengers: this.navParams.get('numOfP'),
       departureTime: this.navParams.get('time'),
-      arrivalRange: Number(this.arrivalwantedtime)
+      arrivalRange: Number(this.arrivalwantedtime),
+      city: this.navParams.get('city')
     }
     this.http.post(url,order).subscribe(()=>{
     });
