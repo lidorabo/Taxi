@@ -64,8 +64,8 @@ export class DriverPage {
           identity_id: this.identity_id_num
         }).then(() => {
           resolve();
-        }).catch((error: Error) => {
-          console.log(error.message);
+        }).catch((error) => {
+          console.log(error);
           reject();
         })
       }, () => {

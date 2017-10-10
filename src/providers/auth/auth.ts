@@ -55,7 +55,6 @@ export class AuthProvider {
         if(data.val() == Permissions.Admin)
             is_admin = true;
     }))
-    console.log(is_admin);
     return is_admin;
   }
   public getValueFromDatabaseOnce(path:string):any{

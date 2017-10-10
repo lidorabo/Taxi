@@ -12,7 +12,7 @@ import {Permissions} from '../../enums';
 */
 @Injectable()
 export class DriverserviceProvider {
-   request_drivers_table: string = 'drivers_requests'
+   request_drivers_table: string = 'drivers'
   constructor(public http: Http,private authData:AuthProvider) {
     console.log('Hello DriverserviceProvider Provider');
   }
@@ -29,6 +29,7 @@ export class DriverserviceProvider {
     return request_sent;
   }
   isDriver():boolean {
+    debugger;
     var uid = firebase.auth().currentUser.uid;
     var database = firebase.database().ref();
     var driver = database.child(this.authData.userstable).child(uid).child('permission');

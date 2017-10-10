@@ -44,7 +44,6 @@ export class MyApp {
 
   }
   checkPage(page) {
-    console.log(typeof (page));
     switch (page) {
       case (DriverPage):
 
