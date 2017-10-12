@@ -1,4 +1,4 @@
-<ion-header class="rtl">
+<ion-header  class="rtl">
   <ion-navbar>
     <ion-title>ניהול</ion-title>
     <ion-buttons left>
@@ -7,26 +7,25 @@
       </button>
     </ion-buttons>
   </ion-navbar>
+  <ion-content *ngIf="has_requests_html" has-bouncing="true" class="rtl" padding>
+      <h2>בקשות פתוחות:</h2>
+      <ng-container *ngFor='let request of requests'>
+        <ul>
+          <li>שם פרטי: {{request.first_name}}</li>
+          <li>שם משפחה: {{request.last_name}}</li>
+          <li>מספר רכב: {{request.car_num}}</li>
+          <li>ת"ז: {{request.identity_id}}</li>
+          <li>מסמכים:</li>
+        </ul>
+        <ion-slides dir="rtl" pager="true" style="max-height:400px">
+          <ion-slide *ngFor="let picture of request.documents">
+            <img [src]="picture">
+          </ion-slide>
+        </ion-slides>
+        <button type="button" ion-button round outline (click)="driver.showDriverAlert(request.uid)">אשר</button>   <button type="button" ion-button round outline (click)="driver.showDriverAlert(request.uid,'reject')">דחה</button>
+      </ng-container>
+    </ion-content>
+    <ion-content *ngIf="!has_requests_html" class="rtl" padding>
+      <h1>אין בקשות לטיפול</h1>
+    </ion-content>
 </ion-header>
-<ion-content *ngIf="has_requests_html" has-bouncing="true" class="rtl" padding>
-  <h2>AirTaxi</h2>
-  <h2>בקשות פתוחות:</h2>
-  <ng-container *ngFor='let request of requests'>
-    <ul>
-      <li>שם פרטי: {{request.first_name}}</li>
-      <li>שם משפחה: {{request.last_name}}</li>
-      <li>מספר רכב: {{request.car_num}}</li>
-      <li>ת"ז: {{request.identity_id}}</li>
-      <li>מסמכים:</li>
-    </ul>
-    <ion-slides dir="rtl" pager="true" style="max-height:400px">
-      <ion-slide *ngFor="let picture of request.documents">
-        <img [src]="picture">
-      </ion-slide>
-    </ion-slides>
-    <button type="button" ion-button round outline (click)="driver.showDriverAlert(request.uid)">אשר</button>   <button type="button" ion-button round outline (click)="driver.showDriverAlert(request.uid,'reject')">דחה</button>
-  </ng-container>
-</ion-content>
-<ion-content *ngIf="!has_requests_html" class="rtl" padding>
-  <h1>אין בקשות לטיפול</h1>
-</ion-content>
