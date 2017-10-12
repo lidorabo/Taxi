@@ -81,7 +81,7 @@
     <allow-navigation href="http://192.168.154.2:8100" />
     <engine name="android" spec="^6.2.3" />
     <engine name="browser" spec="^4.1.0" />
-    <plugin name="com.synconset.imagepicker" spec="~2.1.8">
+    <plugin name="com.synconset.imagepicker" spec="^2.1.10">
         <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value="docuemnts" />
     </plugin>
     <plugin name="cordova-plugin-console" spec="^1.0.7" />

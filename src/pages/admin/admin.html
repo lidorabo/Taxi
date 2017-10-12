@@ -1,9 +1,3 @@
-<!--
-  Generated template for the AdminPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header class="rtl">
   <ion-navbar>
     <ion-title>ניהול</ion-title>
@@ -14,7 +8,8 @@
     </ion-buttons>
   </ion-navbar>
 </ion-header>
-<ion-content    *ngIf="has_requests_html" class="rtl" padding>
+<ion-content *ngIf="has_requests_html" has-bouncing="true" class="rtl" padding>
+  <h2>AirTaxi</h2>
   <h2>בקשות פתוחות:</h2>
   <ng-container *ngFor='let request of requests'>
     <ul>
@@ -24,14 +19,13 @@
       <li>ת"ז: {{request.identity_id}}</li>
       <li>מסמכים:</li>
     </ul>
-    <ion-slides dir="rtl" 	pager="true" style="max-height:400px">
+    <ion-slides dir="rtl" pager="true" style="max-height:400px">
       <ion-slide *ngFor="let picture of request.documents">
         <img [src]="picture">
       </ion-slide>
     </ion-slides>
-   <button type="button" ion-button round outline (click)="driver.showDriverAlert(request.uid)">אשר</button>   <button type="button" ion-button round outline (click)="driver.showDriverAlert(request.uid,'reject')">דחה</button>
+    <button type="button" ion-button round outline (click)="driver.showDriverAlert(request.uid)">אשר</button>   <button type="button" ion-button round outline (click)="driver.showDriverAlert(request.uid,'reject')">דחה</button>
   </ng-container>
-  <ion-infinite-scroll></ion-infinite-scroll>
 </ion-content>
 <ion-content *ngIf="!has_requests_html" class="rtl" padding>
   <h1>אין בקשות לטיפול</h1>

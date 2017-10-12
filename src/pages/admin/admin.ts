@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { MyApp } from '../../app/app.component';
@@ -12,6 +12,7 @@ import { Slides } from 'ionic-angular';
  * on Ionic pages and navigation.
  */
 export interface request {
+
   first_name: string,
   last_name: string,
   car_num: string,
@@ -25,6 +26,7 @@ export interface request {
   templateUrl: 'admin.html',
 })
 export class AdminPage {
+
   private has_requests_html: boolean;
   private requests: request[] = [];
   private num_of_images: number = 2;
@@ -32,16 +34,12 @@ export class AdminPage {
   private SlideOptions = {
     pager:true
   };
-  constructor(public navCtrl: NavController, public navParams: NavParams, private authData: AuthProvider, private menu: MenuController, private driver: DriverserviceProvider) {
-  }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AdminPage');
+
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private authData: AuthProvider, private menu: MenuController, private driver: DriverserviceProvider) {
     this.getRequests(()=>{
     });
-    
-    
-    
   }
   private checkHasRequsts(): Promise<boolean> {
     return new Promise((resolve, reject) => {

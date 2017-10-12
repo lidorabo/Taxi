@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthProvider } from './../../providers/auth/auth';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import firebase from 'firebase';
 /**
  * Generated class for the TimearrivalPage page.
@@ -22,7 +22,7 @@ export class TimearrivalPage {
   selectOptions={
     cssClass:'arrivaltime'
   }
-  constructor(public navCtrl: NavController, public navParams: NavParams,public formBuilder:FormBuilder,private authData:AuthProvider,private http: HttpClient) {
+  constructor(public navCtrl: NavController, public loadingController: LoadingController, public navParams: NavParams,public formBuilder:FormBuilder,private authData:AuthProvider,private http: HttpClient) {
     this.arrivaltimeForm = formBuilder.group({
        arrivalt:[this.authData.emptystring,Validators.required]
        })
@@ -43,7 +43,13 @@ export class TimearrivalPage {
       city: this.navParams.get('city'),
       fullAddress: this.navParams.get('fullAddress')
     }
+
+    let loader = this.loadingController.create({
+      content: "מחשב מסלולים."
+    });  
+    loader.present();
     this.http.post(url,order).subscribe(()=>{
+      loader.dismiss();
     });
   }
   ionViewDidLoad() {
