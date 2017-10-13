@@ -4,7 +4,8 @@ import { TimearrivalPage } from './../timearrival/timearrival';
 import { AuthProvider } from './../../providers/auth/auth';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
+import { MyApp } from '../../app/app.component';
 declare var google:any;
 /**
  * Generated class for the AddressPage page.
@@ -13,7 +14,6 @@ declare var google:any;
  * on Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-address',
   templateUrl: 'address.html',

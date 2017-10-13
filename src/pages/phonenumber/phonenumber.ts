@@ -1,7 +1,7 @@
 import { FlightinfoPage } from './../flightinfo/flightinfo';
 import { ValidatorProvider } from './../../providers/validator/validator';
 import { Component} from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import {IonDigitKeyboardOptions } from '../../components/ion-digit-keyboard';
@@ -12,7 +12,6 @@ import {IonDigitKeyboardOptions } from '../../components/ion-digit-keyboard';
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-@IonicPage()
 @Component({
   selector: 'page-phonenumber',
   templateUrl: 'phonenumber.html',

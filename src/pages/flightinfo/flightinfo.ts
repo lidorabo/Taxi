@@ -4,7 +4,7 @@ import { AddressPage } from './../address/address';
 import { AuthProvider } from './../../providers/auth/auth';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, Injectable, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Nav, MenuController, LoadingController} from 'ionic-angular';
+import { NavController, NavParams, Nav, MenuController, LoadingController} from 'ionic-angular';
 import { IMyDpOptions, IMyInputFieldChanged } from "mydatepicker";
 import { RequestOptions } from '@angular/http';
 import { Page } from '../page/page';
@@ -15,7 +15,7 @@ import {MyApp} from '../../app/app.component'
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-@IonicPage()
+
 @Component({
   selector: 'page-flightinfo',
   templateUrl: 'flightinfo.html',

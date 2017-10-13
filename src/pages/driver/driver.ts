@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController, AlertController } from 'ionic-angular';
+import { NavController, NavParams, MenuController, AlertController, LoadingController } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ValidatorProvider } from '../../providers/validator/validator';
@@ -16,7 +16,6 @@ import { MyApp } from '../../app/app.component';
  * on Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-driver',
   templateUrl: 'driver.html',
@@ -31,7 +30,7 @@ export class DriverPage {
   private uri_64base_images: any = [];
   private image_type:string = 'png';
   private code_networkerror = 'storage/retry-limit-exceeded'
-  constructor(public navCtrl: NavController, private authData: AuthProvider, private formBuilder: FormBuilder, private menu: MenuController, private driver: DriverserviceProvider, validator: ValidatorProvider, private imagePicker: ImagePicker, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public loadingController: LoadingController, private authData: AuthProvider, private formBuilder: FormBuilder, private menu: MenuController, private driver: DriverserviceProvider, validator: ValidatorProvider, private imagePicker: ImagePicker, private alertCtrl: AlertController) {
     this.isDriverhtml = driver.isDriver();
     this.driverRegisterForm = formBuilder.group({
       car_num: [this.authData.emptystring, [Validators.required, validator.carId_NumValidator]],
@@ -78,9 +77,15 @@ export class DriverPage {
 
   sendRequestDriver() {
     var copy = this.uri_64base_images.slice();
+    let loader = this.loadingController.create({
+      content: "אנא המתן בזמן שבקשתך נשלחת לטיפול המנהלים"
+    });  
+    loader.present();
     this.uploadDocumentsToFirebase(copy).then(() => {
+      loader.dismiss();
       this.showMessage('success');
     }).catch(() => {
+      loader.dismiss();
       this.showMessage('error');
     })
   }

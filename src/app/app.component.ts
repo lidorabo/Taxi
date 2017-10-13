@@ -12,6 +12,7 @@ import { AuthProvider } from '../providers/auth/auth';
 import { LoginPage } from '../pages/login/login';
 import { DriverserviceProvider } from '../providers/driverservice/driverservice';
 import { AdminPage } from '../pages/admin/admin';
+
 export interface PageInterface {
   title: string,
   page: any

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthProvider } from './../../providers/auth/auth';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import firebase from 'firebase';
 /**
  * Generated class for the TimearrivalPage page.
@@ -11,7 +11,6 @@ import firebase from 'firebase';
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-@IonicPage()
 @Component({
   selector: 'page-timearrival',
   templateUrl: 'timearrival.html',

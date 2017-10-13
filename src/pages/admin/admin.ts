@@ -1,5 +1,5 @@
 import { Component} from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
+import { NavController, NavParams, MenuController } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { MyApp } from '../../app/app.component';
 import firebase from 'firebase';
@@ -20,7 +20,6 @@ export interface request {
   documents: any [],
   uid: string
 }
-@IonicPage()
 @Component({
   selector: 'page-admin',
   templateUrl: 'admin.html',
