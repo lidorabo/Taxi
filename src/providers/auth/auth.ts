@@ -44,6 +44,7 @@ export class AuthProvider {
     
   }
   public updatePhoneNumber(phonen:string):void{
+    if (!firebase.auth().currentUser.uid) // not null
     firebase.database().ref(this.userstable + '/' + firebase.auth().currentUser.uid).update({
       phone:phonen
     })

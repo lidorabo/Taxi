@@ -34,8 +34,6 @@ export class AdminPage {
     pager:true
   };
 
-
-
   constructor(public navCtrl: NavController, public navParams: NavParams, private authData: AuthProvider, private menu: MenuController, private driver: DriverserviceProvider) {
     this.getRequests(()=>{
     });

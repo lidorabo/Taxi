@@ -37,7 +37,6 @@ export class PrepagePage {
 
   }
   RedirectUser() {
-    
     firebase.auth().onAuthStateChanged((user) => {
       if (user == null) {
         this.navCtrl.setRoot(LoginPage);
