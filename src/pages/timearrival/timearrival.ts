@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import firebase from 'firebase';
+import { OrdersPage } from '../orders/orders';
 /**
  * Generated class for the TimearrivalPage page.
  *
@@ -28,7 +29,6 @@ export class TimearrivalPage {
   }
   sendOrder()
   {
-
     const url = 'https://taxiserver.herokuapp.com/api/orders'
     var order = {
       uid: firebase.auth().currentUser.uid,
@@ -49,8 +49,10 @@ export class TimearrivalPage {
     loader.present();
     this.http.post(url,order).subscribe(()=>{
       loader.dismiss();
+      this.navCtrl.push(OrdersPage);
     });
   }
+
   ionViewDidLoad() {
     console.log('ionViewDidLoad TimearrivalPage');
   }
