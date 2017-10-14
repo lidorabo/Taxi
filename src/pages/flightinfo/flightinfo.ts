@@ -9,13 +9,15 @@ import { IMyDpOptions, IMyInputFieldChanged } from "mydatepicker";
 import { RequestOptions } from '@angular/http';
 import { Page } from '../page/page';
 import {MyApp} from '../../app/app.component'
+import firebase from "firebase";
+import { PhonenumberPage } from '../phonenumber/phonenumber';
+//import moment from 'moment';
 /**
  * Generated class for the FlightinfoPage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-
 @Component({
   selector: 'page-flightinfo',
   templateUrl: 'flightinfo.html',
@@ -59,6 +61,13 @@ export class FlightinfoPage {
       }
   private date: string = this.placeholder;
   constructor(public navCtrl: NavController, public loadingController: LoadingController, public navParams: NavParams, public formBuilder: FormBuilder, private authData: AuthProvider, private http: HttpClient, validator: ValidatorProvider,private menu:MenuController) {
+    // var userId = firebase.auth().currentUser.uid;
+    // firebase.database().ref('/users/' + userId).once('value').then((snapshot) =>{
+    //   if(typeof(snapshot.val()['phone']) == 'undefined')
+    //   {
+    //     this.navCtrl.setRoot(PhonenumberPage)
+    //   }
+    // });   
     this.flightNumForm = formBuilder.group({
       flightnumber: [this.authData.emptystring, [Validators.required, validator.flightNumberValidator]],
       flight_date: [this.authData.emptystring, Validators.required]
@@ -72,7 +81,6 @@ export class FlightinfoPage {
   checkDate(data) {
     var flight_time = this.moment(data.date + ' ' + data.time, "DD/MM/YYYY HH:mm");
     var duration = flight_time.diff(this.now, 'hours');
-    debugger;
     if (duration >= 30)
       return true;
     else

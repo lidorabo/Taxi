@@ -16,7 +16,7 @@
       <form class="rtl" [formGroup]="phoneForm">
         <ion-item class="phone">
           <ion-label floating primary>מספר טלפון</ion-label>
-          <ion-input  [(ngModel)]="userInfo.phone" disabled="true" formControlName="phone" type="text" #myinput id="phone">
+          <ion-input [(ngModel)]="userInfo.phone" disabled="true" formControlName="phone" type="text" #myinput id="phone">
           </ion-input>
         </ion-item>
         <p  class="invalid" *ngIf="!this.phoneForm.controls.phone.valid && this.userInfo.phone"  danger padding-left>{{ message }}</p>

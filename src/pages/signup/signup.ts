@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
 import firebase from 'firebase';
 import {Permissions} from '../../enums'
+import { LoginPage } from '../login/login';
 @Component({
   selector: 'page-signup',
   templateUrl: 'signup.html',
@@ -34,6 +35,7 @@ export class SignupPage {
         this.authData.afAuth.auth.signOut();
         this.authData.AddUserToFireBaseDatabse(this.userInfo.email,this.userInfo.first_name,this.userInfo.last_name,this.userInfo.permission);
         this.authData.updatePhoneNumber(this.userInfo.phone);
+        this.nav.setRoot(LoginPage)
       }, (error) => {
         this.loading.dismiss().then( () => {
           var errorMessage: string = error.message;
