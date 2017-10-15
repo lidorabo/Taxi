@@ -9,7 +9,6 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
-import { PrepagePage } from '../pages/prepage/prepage';
 import { LoginPage } from '../pages/login/login';
 import { Facebook } from '@ionic-native/facebook'
 import { GooglePlus } from '@ionic-native/google-plus';
@@ -50,7 +49,6 @@ import { AdminPage } from '../pages/admin/admin';
   declarations: [
     MyApp,
     AdminPage,
-    PrepagePage,
     LoginPage,
     SignupPage,
     AutocompletePage,
@@ -83,7 +81,6 @@ import { AdminPage } from '../pages/admin/admin';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    PrepagePage,
     LoginPage,
     SignupPage,
     ResetpasswordPage,

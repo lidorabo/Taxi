@@ -39,7 +39,8 @@ export class AuthProvider {
       email: email,
       first_name: firstname,
       last_name: lastname,
-      permission: Permissions.User
+      permission: Permissions.User,
+      status: 0
     });
     
   }

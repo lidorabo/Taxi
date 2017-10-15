@@ -1,10 +1,12 @@
 import { FlightinfoPage } from './../flightinfo/flightinfo';
+import { OrdersPage } from './../orders/orders';
 import { ValidatorProvider } from './../../providers/validator/validator';
 import { Component} from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import {IonDigitKeyboardOptions } from '../../components/ion-digit-keyboard';
+import { AdminPage } from '../admin/admin';
 
 /**
  * Generated class for the PhonenumberPage page.
@@ -12,6 +14,7 @@ import {IonDigitKeyboardOptions } from '../../components/ion-digit-keyboard';
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
+
 @Component({
   selector: 'page-phonenumber',
   templateUrl: 'phonenumber.html',
@@ -51,15 +54,46 @@ export class PhonenumberPage {
     // Log the pressed key
     if(key == "right")
     {
-      this.message = '';
-      console.log(this.message);
+      this.message = '';      
       this.authData.updatePhoneNumber(this.userInfo.phone);
+      //this.navCtrl.setRoot(LoginPage);
       this.navCtrl.setRoot(FlightinfoPage);
+      this.userInfoDB(firebase.auth().currentUser.uid).then((op)=>{
+        if(op['status'] == 0)
+        {
+          this.navCtrl.setRoot(FlightinfoPage);
+        }
+        else if(op['status'] == 1)
+        {
+          this.navCtrl.setRoot(OrdersPage);
+        }
+        else
+        {
+          console.log("not good");
+          console.log(JSON.stringify(op));
+          this.navCtrl.setRoot(FlightinfoPage);
+        }
+      });  
       
     } 
     else if (key == "left")
       this.userInfo.phone = this.userInfo.phone.substr(0, this.userInfo.phone.length - 1);
     else
+      {
       this.userInfo.phone = this.userInfo.phone + key;
+      
+      }
+  }
+
+  userInfoDB(uid)
+  {
+    return new Promise((resolve, reject)=>{
+      var field:string;
+      var query=firebase.database().ref('/users' + '/' +uid);
+      query.once('value',function(snapshot){
+           resolve(snapshot.val());
+           
+      })
+    })    
   }
 }

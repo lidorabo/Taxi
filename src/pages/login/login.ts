@@ -10,6 +10,8 @@ import { AuthProvider } from '../../providers/auth/auth';
 import { ResetpasswordPage } from "../resetpassword/resetpassword";
 import { SignupPage } from "../signup/signup";
 import {Permissions} from '../../enums'
+import { PhonenumberPage } from '../phonenumber/phonenumber';
+import { OrdersPage } from '../orders/orders';
 @Injectable()
 @Component({
   selector: 'page-login',
@@ -75,15 +77,61 @@ export class LoginPage {
       this.facebook.login(["email", "public_profile"]).then((loginResponse) => {
         let credential = firebase.auth.FacebookAuthProvider.credential(loginResponse.authResponse.accessToken);
         firebase.auth().signInWithCredential(credential).then((info) => {
-          if (this.authData.getValueFromDatabaseOnce(firebase.auth().currentUser.uid) == null)
-            this.authData.AddUserToFireBaseDatabse(info.providerData[0].email, info.displayName.split(' ')[0], info.displayName.split(' ')[1],Permissions.User);
+            this.userInfoDB(firebase.auth().currentUser.uid).then((op)=>{
+              if(!op)
+              {
+                this.authData.AddUserToFireBaseDatabse(info.providerData[0].email, info.displayName.split(' ')[0], info.displayName.split(' ')[1],Permissions.User);
+                this.navCtrl.setRoot(PhonenumberPage);
+              }
+              else
+              {
+                if(op['status'] == 0)
+                {
+                  this.navCtrl.setRoot(FlightinfoPage);
+                }
+                else if(op['status'] == 1)
+                {
+                  this.navCtrl.setRoot(OrdersPage);
+                }
+                else
+                {
+                  console.log("not good");
+                  console.log(JSON.stringify(op));
+                  this.navCtrl.setRoot(FlightinfoPage);
+                }
+              }
+            });
         })
       })
     }
     else {
       firebase.auth().signInWithPopup(this.authData.facebookwebprovider).then((user) => {
-        if (this.authData.getValueFromDatabaseOnce(firebase.auth().currentUser.uid) == null)
-          this.authData.AddUserToFireBaseDatabse(user.additionalUserInfo.profile.email, user.additionalUserInfo.profile.first_name, user.additionalUserInfo.profile.last_name, Permissions.User);
+        this.userInfoDB(firebase.auth().currentUser.uid).then((op)=>{
+
+          if(!op)
+          {
+            this.authData.AddUserToFireBaseDatabse(user.additionalUserInfo.profile.email, user.additionalUserInfo.profile.first_name, user.additionalUserInfo.profile.last_name, Permissions.User);
+            this.navCtrl.setRoot(PhonenumberPage);
+          }
+          else
+          {
+            if(op['status'] == 0)
+            {
+              this.navCtrl.setRoot(FlightinfoPage);
+            }
+            else if(op['status'] == 1)
+            {
+              this.navCtrl.setRoot(OrdersPage);
+            }
+            else
+            {
+              console.log("not good");
+              console.log(JSON.stringify(op));
+              this.navCtrl.setRoot(FlightinfoPage);
+            }
+          }
+
+        });
       }).catch(function (error) {
       });
     }
@@ -98,9 +146,29 @@ export class LoginPage {
       }).then(res => {
         firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
           .then(user => {
-            if (this.authData.getValueFromDatabaseOnce(firebase.auth().currentUser.uid) == null)
-              this.authData.AddUserToFireBaseDatabse(user.providerData[0].email, user.displayName.split(' ')[0], user.displayName.split(' ')[1], Permissions.User);
-            this.navCtrl.setRoot(FlightinfoPage);
+            this.userInfoDB(firebase.auth().currentUser.uid).then((op)=>{
+              if(op)
+              {
+                this.navCtrl.setRoot(FlightinfoPage);
+              }
+              else
+              {
+                if(op['status'] == 0)
+                {
+                  this.navCtrl.setRoot(FlightinfoPage);
+                }
+                else if(op['status'] == 1)
+                {
+                  this.navCtrl.setRoot(OrdersPage);
+                }
+                else
+                {
+                  console.log("not good");
+                  console.log(JSON.stringify(op));
+                  this.navCtrl.setRoot(FlightinfoPage);
+                }
+              }
+            });
           })
           .catch(error => alert("Firebase failure: " + JSON.stringify(error)));
       }).catch(err => alert(err));
@@ -108,15 +176,48 @@ export class LoginPage {
     else {
       this.authData.googlewebprovider.addScope(this.authData.emailprop);
       firebase.auth().signInWithPopup(this.authData.googlewebprovider).then((result) => {
-        if (this.authData.getValueFromDatabaseOnce(firebase.auth().currentUser.uid) == null)
-          this.authData.AddUserToFireBaseDatabse(result.additionalUserInfo.profile.email, result.additionalUserInfo.profile.given_name, result.additionalUserInfo.profile.family_name, Permissions.User);
-        this.navCtrl.setRoot(FlightinfoPage);
+        this.userInfoDB(firebase.auth().currentUser.uid).then((op)=>{
+          if(!op)
+          {
+            this.authData.AddUserToFireBaseDatabse(result.additionalUserInfo.profile.email, result.additionalUserInfo.profile.given_name, result.additionalUserInfo.profile.family_name, Permissions.User);
+            this.navCtrl.setRoot(PhonenumberPage);
+          }
+          else
+          {
+            if(op['status'] == 0)
+            {
+              this.navCtrl.setRoot(FlightinfoPage);
+            }
+            else if(op['status'] == 1)
+            {
+              this.navCtrl.setRoot(OrdersPage);
+            }
+            else
+            {
+              console.log("not good");
+              console.log(JSON.stringify(op));
+              this.navCtrl.setRoot(FlightinfoPage);
+            }
+          }
+        });
       }).catch(function (error) {
 
       });
     }
 
 
+  }
+
+  userInfoDB(uid)
+  {
+    return new Promise((resolve, reject)=>{
+      var field:string;
+      var query=firebase.database().ref('/users' + '/' +uid);
+      query.once('value',function(snapshot){
+           resolve(snapshot.val());
+           
+      })
+    })    
   }
 }
 

@@ -2,7 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { Platform, LoadingController, NavController, AlertController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { PrepagePage } from '../pages/prepage/prepage';
+import { PhonenumberPage } from './../pages/phonenumber/phonenumber';
+import { OrdersPage } from './../pages/orders/orders';
 import { DisconnectPage } from '../pages/disconnect/disconnect';
 import { ProfilePage } from '../pages/profile/profile';
 import { DriverPage } from '../pages/driver/driver';
@@ -12,6 +13,7 @@ import { AuthProvider } from '../providers/auth/auth';
 import { LoginPage } from '../pages/login/login';
 import { DriverserviceProvider } from '../providers/driverservice/driverservice';
 import { AdminPage } from '../pages/admin/admin';
+import firebase from "firebase";
 
 export interface PageInterface {
   title: string,
@@ -21,6 +23,8 @@ export interface PageInterface {
   templateUrl: 'app.html'
 })
 
+
+
 export class MyApp {
   pages: PageInterface[] = [{ title: 'ניהול', page: AdminPage },
   { title: 'נהג', page: DriverPage },
@@ -29,21 +33,84 @@ export class MyApp {
   { title: 'התנתק', page: DisconnectPage }]
   @ViewChild('content') navCtrl: NavController;
   ms = 5000;
+  phonefirebase: string = 'phone';
   public static menu_flight_admin = 'flight_admin';
   public static menu_admin = 'admin';
   public static menu_flight_user = 'flight_user';
   public static menu_driver_user = 'driver_user';
   public static menu_driver_admin = 'driver_admin';
   private confirmm:string = 'האם אתה בטוח כי ברצונך להתנתק?'
-  public rootPage: any = PrepagePage;
-  constructor(private platform: Platform, public loadingCtrl: LoadingController, private splashScreen: SplashScreen, private statusBar: StatusBar, private alertCtrl: AlertController, private authData: AuthProvider, private driver: DriverserviceProvider) {
-    platform.ready().then(() => {
+  public rootPage: any;
+  
+
+  
+
+  constructor(private platform: Platform, public authdata: AuthProvider, public loadingCtrl: LoadingController, private splashScreen: SplashScreen, private statusBar: StatusBar, private alertCtrl: AlertController, private authData: AuthProvider, private driver: DriverserviceProvider) {
+   this.RedirectUser().then((page)=>{
+    this.rootPage = page;
+   })
+ 
+    platform.ready().then(() => {      
+      //this.rootPage = PhonenumberPage;
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
-    });
+    })
 
   }
+
+  RedirectUser() {
+    return new Promise((resolve, reject)=>{
+      const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+        
+        if (user == null) {
+          resolve(LoginPage);
+          unsubscribe();
+        }
+        else {
+          this.userInfo(firebase.auth().currentUser.uid).then((op)=>{
+            if(typeof(op['phone']) == 'undefined')
+            {
+              resolve(PhonenumberPage);
+              unsubscribe();
+            }
+            else if(op['status'] == 0)
+            {
+              resolve(FlightinfoPage);
+              unsubscribe();
+            }
+            else if(op['status'] == 1)
+            {
+              resolve(OrdersPage)
+              unsubscribe();
+            }
+            else
+            {
+              console.log("not good");
+              console.log(JSON.stringify(op));
+              
+              
+              resolve(FlightinfoPage);
+              unsubscribe();
+            }
+          });    
+        }
+      })
+    });
+  }
+
+  userInfo(uid)
+  {
+    return new Promise((resolve, reject)=>{
+      var field:string;
+      var query=firebase.database().ref('/users' + '/' +uid);
+      query.once('value',function(snapshot){
+           resolve(snapshot.val());
+           
+      })
+    })    
+  }
+
   checkPage(page) {
     switch (page) {
       case (DriverPage):

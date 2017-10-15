@@ -9,13 +9,15 @@ import { IMyDpOptions, IMyInputFieldChanged } from "mydatepicker";
 import { RequestOptions } from '@angular/http';
 import { Page } from '../page/page';
 import {MyApp} from '../../app/app.component'
+import firebase from "firebase";
+import { PhonenumberPage } from '../phonenumber/phonenumber';
+//import moment from 'moment';
 /**
  * Generated class for the FlightinfoPage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-
 @Component({
   selector: 'page-flightinfo',
   templateUrl: 'flightinfo.html',
@@ -72,7 +74,6 @@ export class FlightinfoPage {
   checkDate(data) {
     var flight_time = this.moment(data.date + ' ' + data.time, "DD/MM/YYYY HH:mm");
     var duration = flight_time.diff(this.now, 'hours');
-    debugger;
     if (duration >= 30)
       return true;
     else

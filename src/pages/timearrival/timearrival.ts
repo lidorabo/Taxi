@@ -28,8 +28,7 @@ export class TimearrivalPage {
   }
   sendOrder()
   {
-
-    const url = 'https://taxiserver.herokuapp.com/api/orders'
+    const url = 'https://taxiserver.herokuapp.com/api/orders';
     var order = {
       uid: firebase.auth().currentUser.uid,
       flightNo: this.navParams.get('flightNum'),
@@ -48,6 +47,9 @@ export class TimearrivalPage {
     });  
     loader.present();
     this.http.post(url,order).subscribe(()=>{
+      firebase.database().ref('/users/' + firebase.auth().currentUser.uid).update({
+        status:1
+      })
       loader.dismiss();
     });
   }

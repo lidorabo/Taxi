@@ -1,5 +1,5 @@
-import { Component} from '@angular/core';
-import { NavController, NavParams, MenuController } from 'ionic-angular';
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { MyApp } from '../../app/app.component';
 import firebase from 'firebase';
@@ -17,7 +17,7 @@ export interface request {
   last_name: string,
   car_num: string,
   identity_id: string,
-  documents: any [],
+  documents: any[],
   uid: string
 }
 @Component({
@@ -25,21 +25,20 @@ export interface request {
   templateUrl: 'admin.html',
 })
 export class AdminPage {
-
+  @ViewChild('hasrequests') request_html: ElementRef;
+  @ViewChild('notrequests') not_request_html: ElementRef;
   private has_requests_html: boolean;
   private requests: request[] = [];
   private num_of_images: number = 2;
-  private type:string = '.png';
-  private SlideOptions = {
-    pager:true
-  };
-
-
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, private authData: AuthProvider, private menu: MenuController, private driver: DriverserviceProvider) {
-    this.getRequests(()=>{
+  private type: string = '.png';
+  private message = '';
+  constructor(public navCtrl: NavController, public navParams: NavParams, private authData: AuthProvider, private menu: MenuController, private driver: DriverserviceProvider, element: ElementRef) {
+    this.getRequests(() => {
+        this.present_Message();
     });
   }
+
+  
   private checkHasRequsts(): Promise<boolean> {
     return new Promise((resolve, reject) => {
       var request_database = firebase.database().ref('/' + this.driver.request_drivers_table);
@@ -52,7 +51,31 @@ export class AdminPage {
       })
     })
   }
-  private getPrivateInfo(uid: string,callback){
+  private present_Message() {
+    if (this.requests.length == 0)
+      this.message = 'אין בקשות לטיפול';
+    else
+      this.message = 'בקשות פתוחות:';
+  }
+  private click_Reuqest(uid: string, request: request, type: string) {
+    switch (type) {
+      case 'reject':
+        this.driver.showDriverAlert(uid, request, this.requests, type).then(() => {
+                this.present_Message();
+        });
+        break;
+
+      default:
+        this.driver.showDriverAlert(uid, request, this.requests).then(() => {
+              this.present_Message();
+        });
+        break;
+    }
+
+
+  }
+
+  private getPrivateInfo(uid: string, callback) {
     debugger;
     var user_query = firebase.database().ref().child(this.authData.userstable).child(uid);
     var first_name;
@@ -60,43 +83,41 @@ export class AdminPage {
     user_query.once('value', (answer) => {
       first_name = answer.child('first_name').val();
       last_name = answer.child('last_name').val();
-    }).then(()=>{
-        callback(first_name,last_name);
+    }).then(() => {
+      callback(first_name, last_name);
     })
   }
-  private pushDocument(num_image:number,uid:string,pictures_uri:any[]):Promise<void>{
+  private pushDocument(num_image: number, uid: string, pictures_uri: any[]): Promise<void> {
     var documents = firebase.storage().ref().child('Documents').child(uid);
-    return new Promise((resolve,reject)=>{
-      documents.child('Image' + '_' + num_image+this.type).getDownloadURL().then((uri) => {
+    return new Promise((resolve, reject) => {
+      documents.child('Image' + '_' + num_image + this.type).getDownloadURL().then((uri) => {
         pictures_uri.push(uri);
         resolve();
-    }).catch(()=>{
-      reject();
-    })
-  })
-}
-  private getDocuments(uid,callback, pictures_uri = [], mone = 0): void {
-    if (pictures_uri.length == this.num_of_images)
-    {
-      callback(pictures_uri,uid);
-    }
-    else
-    {
-      this.pushDocument(++mone,uid,pictures_uri).then(()=>{
-        this.getDocuments(uid,callback, pictures_uri, mone);
+      }).catch(() => {
+        reject();
       })
-    }  
-    
-   
+    })
   }
-  private pushRequests(children:any[],callback){
-    if(children.length == 0)
-          callback();
-    else{
+  private getDocuments(uid, callback, pictures_uri = [], mone = 0): void {
+    if (pictures_uri.length == this.num_of_images) {
+      callback(pictures_uri, uid);
+    }
+    else {
+      this.pushDocument(++mone, uid, pictures_uri).then(() => {
+        this.getDocuments(uid, callback, pictures_uri, mone);
+      })
+    }
+
+
+  }
+  private pushRequests(children: any[], callback) {
+    if (children.length == 0)
+      callback();
+    else {
       var child = children.pop();
-      this.getDocuments(child.key,(pictures,key)=>{
-        this.getPrivateInfo(key,(first_name,last_name)=>{
-             this.requests.push({
+      this.getDocuments(child.key, (pictures, key) => {
+        this.getPrivateInfo(key, (first_name, last_name) => {
+          this.requests.push({
             first_name: first_name,
             last_name: last_name,
             car_num: child.val().car_num,
@@ -104,39 +125,39 @@ export class AdminPage {
             documents: pictures,
             uid: child.key
           })
-          this.pushRequests(children,callback);
-        })   
+          this.pushRequests(children, callback);
+        })
       });
-      
+
     }
-   
+
   }
   private getRequests(callback) {
     var request_database = firebase.database().ref().child(this.driver.request_drivers_table);
-    var first_name:string;
-    var last_name:string;
-    var car_num:string;
-    var identity_id:string;
-    var files:any[]; 
-    var children:any[]=[];
+    var first_name: string;
+    var last_name: string;
+    var car_num: string;
+    var identity_id: string;
+    var files: any[];
+    var children: any[] = [];
     this.checkHasRequsts().then(() => {
       this.has_requests_html = true;
       request_database.once('value', database => {
-            database.forEach((child)=>{
-              children.push(child);
-            return false;
-            })         
-      }).then(()=>{
-          this.pushRequests(children,()=>{
-            callback();
-            
-          })
+        database.forEach((child) => {
+          children.push(child);
+          return false;
+        })
+      }).then(() => {
+        this.pushRequests(children, () => {
+          callback();
+
+        })
       })
 
-      }).catch(()=>{
-           
-            
-      })
+    }).catch(() => {
+
+
+    })
   }
   ionViewDidEnter() {
     this.menu.enable(false, MyApp.menu_flight_user);
