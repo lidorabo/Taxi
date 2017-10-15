@@ -61,6 +61,13 @@ export class FlightinfoPage {
       }
   private date: string = this.placeholder;
   constructor(public navCtrl: NavController, public loadingController: LoadingController, public navParams: NavParams, public formBuilder: FormBuilder, private authData: AuthProvider, private http: HttpClient, validator: ValidatorProvider,private menu:MenuController) {
+    // var userId = firebase.auth().currentUser.uid;
+    // firebase.database().ref('/users/' + userId).once('value').then((snapshot) =>{
+    //   if(typeof(snapshot.val()['phone']) == 'undefined')
+    //   {
+    //     this.navCtrl.setRoot(PhonenumberPage)
+    //   }
+    // });   
     this.flightNumForm = formBuilder.group({
       flightnumber: [this.authData.emptystring, [Validators.required, validator.flightNumberValidator]],
       flight_date: [this.authData.emptystring, Validators.required]

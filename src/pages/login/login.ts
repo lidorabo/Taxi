@@ -11,7 +11,10 @@ import { ResetpasswordPage } from "../resetpassword/resetpassword";
 import { SignupPage } from "../signup/signup";
 import {Permissions} from '../../enums'
 import { PhonenumberPage } from '../phonenumber/phonenumber';
+<<<<<<< HEAD
 import { OrdersPage } from '../orders/orders';
+=======
+>>>>>>> 177aaa4f022156dba1edf846a8c132ba21376c0d
 @Injectable()
 @Component({
   selector: 'page-login',
@@ -77,6 +80,7 @@ export class LoginPage {
       this.facebook.login(["email", "public_profile"]).then((loginResponse) => {
         let credential = firebase.auth.FacebookAuthProvider.credential(loginResponse.authResponse.accessToken);
         firebase.auth().signInWithCredential(credential).then((info) => {
+<<<<<<< HEAD
             this.userInfoDB(firebase.auth().currentUser.uid).then((op)=>{
               if(!op)
               {
@@ -99,6 +103,17 @@ export class LoginPage {
                   console.log(JSON.stringify(op));
                   this.navCtrl.setRoot(FlightinfoPage);
                 }
+=======
+            this.havePhoneField(firebase.auth().currentUser.uid).then((op)=>{
+              if(op)
+              {
+                this.navCtrl.setRoot(FlightinfoPage);
+              }
+              else
+              {
+                this.authData.AddUserToFireBaseDatabse(info.providerData[0].email, info.displayName.split(' ')[0], info.displayName.split(' ')[1],Permissions.User);
+                this.navCtrl.setRoot(PhonenumberPage);
+>>>>>>> 177aaa4f022156dba1edf846a8c132ba21376c0d
               }
             });
         })
@@ -106,6 +121,7 @@ export class LoginPage {
     }
     else {
       firebase.auth().signInWithPopup(this.authData.facebookwebprovider).then((user) => {
+<<<<<<< HEAD
         this.userInfoDB(firebase.auth().currentUser.uid).then((op)=>{
 
           if(!op)
@@ -131,6 +147,18 @@ export class LoginPage {
             }
           }
 
+=======
+        this.havePhoneField(firebase.auth().currentUser.uid).then((op)=>{
+          if(op)
+          {
+            this.navCtrl.setRoot(FlightinfoPage);
+          }
+          else
+          {
+            this.authData.AddUserToFireBaseDatabse(user.additionalUserInfo.profile.email, user.additionalUserInfo.profile.first_name, user.additionalUserInfo.profile.last_name, Permissions.User);
+            this.navCtrl.setRoot(PhonenumberPage);
+          }
+>>>>>>> 177aaa4f022156dba1edf846a8c132ba21376c0d
         });
       }).catch(function (error) {
       });
@@ -146,13 +174,18 @@ export class LoginPage {
       }).then(res => {
         firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
           .then(user => {
+<<<<<<< HEAD
             this.userInfoDB(firebase.auth().currentUser.uid).then((op)=>{
+=======
+            this.havePhoneField(firebase.auth().currentUser.uid).then((op)=>{
+>>>>>>> 177aaa4f022156dba1edf846a8c132ba21376c0d
               if(op)
               {
                 this.navCtrl.setRoot(FlightinfoPage);
               }
               else
               {
+<<<<<<< HEAD
                 if(op['status'] == 0)
                 {
                   this.navCtrl.setRoot(FlightinfoPage);
@@ -167,6 +200,10 @@ export class LoginPage {
                   console.log(JSON.stringify(op));
                   this.navCtrl.setRoot(FlightinfoPage);
                 }
+=======
+                this.authData.AddUserToFireBaseDatabse(user.providerData[0].email, user.displayName.split(' ')[0], user.displayName.split(' ')[1], Permissions.User);
+                this.navCtrl.setRoot(PhonenumberPage);
+>>>>>>> 177aaa4f022156dba1edf846a8c132ba21376c0d
               }
             });
           })
@@ -176,6 +213,7 @@ export class LoginPage {
     else {
       this.authData.googlewebprovider.addScope(this.authData.emailprop);
       firebase.auth().signInWithPopup(this.authData.googlewebprovider).then((result) => {
+<<<<<<< HEAD
         this.userInfoDB(firebase.auth().currentUser.uid).then((op)=>{
           if(!op)
           {
@@ -198,6 +236,17 @@ export class LoginPage {
               console.log(JSON.stringify(op));
               this.navCtrl.setRoot(FlightinfoPage);
             }
+=======
+        this.havePhoneField(firebase.auth().currentUser.uid).then((op)=>{
+          if(op)
+          {
+            this.navCtrl.setRoot(FlightinfoPage);
+          }
+          else
+          {
+            this.authData.AddUserToFireBaseDatabse(result.additionalUserInfo.profile.email, result.additionalUserInfo.profile.given_name, result.additionalUserInfo.profile.family_name, Permissions.User);
+            this.navCtrl.setRoot(PhonenumberPage);
+>>>>>>> 177aaa4f022156dba1edf846a8c132ba21376c0d
           }
         });
       }).catch(function (error) {
@@ -208,11 +257,19 @@ export class LoginPage {
 
   }
 
+<<<<<<< HEAD
   userInfoDB(uid)
   {
     return new Promise((resolve, reject)=>{
       var field:string;
       var query=firebase.database().ref('/users' + '/' +uid);
+=======
+  havePhoneField(uid)
+  {
+    return new Promise((resolve, reject)=>{
+      var field:string;
+      var query=firebase.database().ref('/users' + '/' +uid + '/phone');
+>>>>>>> 177aaa4f022156dba1edf846a8c132ba21376c0d
       query.once('value',function(snapshot){
            resolve(snapshot.val());
            

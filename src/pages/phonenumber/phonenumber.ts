@@ -83,6 +83,7 @@ export class PhonenumberPage {
       this.userInfo.phone = this.userInfo.phone + key;
       
       }
+<<<<<<< HEAD
   }
 
   userInfoDB(uid)
@@ -95,5 +96,7 @@ export class PhonenumberPage {
            
       })
     })    
+=======
+>>>>>>> 177aaa4f022156dba1edf846a8c132ba21376c0d
   }
 }
