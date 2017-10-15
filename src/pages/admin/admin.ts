@@ -25,8 +25,6 @@ export interface request {
   templateUrl: 'admin.html',
 })
 export class AdminPage {
-  @ViewChild('hasrequests') request_html: ElementRef;
-  @ViewChild('notrequests') not_request_html: ElementRef;
   private has_requests_html: boolean;
   private requests: request[] = [];
   private num_of_images: number = 2;

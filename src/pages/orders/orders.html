@@ -1,33 +1,18 @@
-<!--
-  Generated template for the OrdersPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
-
-  <ion-navbar  class="rtl">
-      <ion-title>הזמנות</ion-title>
+<ion-header class="rtl">
+  <ion-navbar>
+    <ion-title>מסלולים מוצעים</ion-title>
   </ion-navbar>
-
+  <ion-content class="rtl" padding>
+    <button *ngIf= "has_cancel_button"  (click)="cancelOrder()" ion-button round outline>{{ button_cancel_order}}</button>
+    <ng-container *ngFor="let order of orders; index as i ">
+      <ul>
+        <li>סוג נסיעה: {{order.type}}</li>
+        <li>מחיר: {{order.cost}}</li>
+        <li>מועד האיסוף: {{order.pickUp_time}}</li>
+        <li>מספר נוסעים: {{order.total_pessengers}}</li>
+        <li>מועד הגעה:{{order.arrival_time}}</li>
+      </ul>
+      <button type="button" (click)="UpdateServer(order.pathid,i)" ion-button round outline>{{buttons[i].text}}</button>
+    </ng-container>
+  </ion-content>
 </ion-header>
-
-<ion-content padding class="rtl">
-  <ion-item>
-    <ion-icon name="alarm" item-start></ion-icon>
-    שעת איסוף
-    <ion-badge item-end></ion-badge>
-  </ion-item>
-  <br />
-  <ion-item>
-    <ion-icon name="alarm" item-start></ion-icon>
-    שעת הגעה משוערת
-    <ion-badge item-end></ion-badge>
-  </ion-item>
-  <br />
-  <ion-item>
-    <ion-icon name="pricetag" item-start></ion-icon>
-    מחיר
-    <ion-badge item-end></ion-badge>
-  </ion-item>
-</ion-content>

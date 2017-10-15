@@ -51,8 +51,6 @@ export class MyApp {
    })
  
     platform.ready().then(() => {      
-      //this.rootPage = PhonenumberPage;
-      // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
     })
@@ -96,6 +94,10 @@ export class MyApp {
           });    
         }
       })
+          resolve(OrdersPage);
+          unsubscribe();
+          }
+      });
     });
   }
 

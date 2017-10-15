@@ -9,6 +9,7 @@ import { ImagePicker, ImagePickerOptions } from '@ionic-native/image-picker';
 import firebase from 'firebase';
 import { FlightinfoPage } from '../flightinfo/flightinfo';
 import { MyApp } from '../../app/app.component';
+import { HttpClient } from '@angular/common/http';
 /**
  * Generated class for the DriverPage page.
  *
@@ -20,6 +21,11 @@ import { MyApp } from '../../app/app.component';
   selector: 'page-driver',
   templateUrl: 'driver.html',
 })
+export interface Order_Drive{
+  path: string,
+  points: any[];
+  cost: number
+}
 export class DriverPage {
   private isDriverhtml: boolean;
   private driverRegisterForm: FormGroup;
@@ -30,7 +36,7 @@ export class DriverPage {
   private uri_64base_images: any = [];
   private image_type:string = 'png';
   private code_networkerror = 'storage/retry-limit-exceeded'
-  constructor(public navCtrl: NavController, public loadingController: LoadingController, private authData: AuthProvider, private formBuilder: FormBuilder, private menu: MenuController, private driver: DriverserviceProvider, validator: ValidatorProvider, private imagePicker: ImagePicker, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public loadingController: LoadingController, private authData: AuthProvider, private formBuilder: FormBuilder, private menu: MenuController, private driver: DriverserviceProvider, validator: ValidatorProvider, private imagePicker: ImagePicker, private alertCtrl: AlertController, private httpclient: HttpClient) {
     this.isDriverhtml = driver.isDriver();
     this.driverRegisterForm = formBuilder.group({
       car_num: [this.authData.emptystring, [Validators.required, validator.carId_NumValidator]],

@@ -9,7 +9,7 @@
   </ion-navbar>
   <ion-content has-bouncing="true" class="rtl" padding>
     <ng-container *ngIf="has_requests_html">
-      <h2 #hasrequests>{{message}}</h2>
+      <h2>{{message}}</h2>
       <ng-container *ngFor='let request of requests'>
         <ul>
           <li>שם פרטי: {{request.first_name}}</li>
@@ -28,7 +28,7 @@
       </ng-container>
     </ng-container>
     <ng-container *ngIf= "!has_requests_html">
-        <h2 #notrequests  >{{message}}</h2>
+        <h2>{{message}}</h2>
     </ng-container>
   </ion-content>
 </ion-header>
